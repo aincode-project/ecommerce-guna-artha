@@ -31,6 +31,7 @@
 <hr/>
 <div class="card">
     <div class="card-body">
+        @if (auth()->check() && auth()->user()->hak_akses == "Admin")
         @if ($id == 0)
         <form action="{{ route('kategori-barang.store') }}" method="post">
         @else
@@ -40,8 +41,10 @@
             @csrf
             <div class="row">
                 <div class="col-md-4">
-                    <input class="form-control mb-3" type="text" id="nama_kategori" name="nama_kategori" placeholder="Masukan Nama Kategori" @if ($id != 0)
+                    <input class="form-control @error('nama_kategori') is-invalid @enderror" type="text" id="nama_kategori" name="nama_kategori" placeholder="Masukan Nama Kategori" @if ($id != 0)
                         value="{{ $editKategoriBarang->nama_kategori }}"
+                    @else
+                        value="{{ old('nama_kategori') }}"
                     @endif required>
 
                     @error('nama_kategori')
@@ -59,21 +62,27 @@
                 </div>
             </div>
         </form>
+        @endif
+        <hr>
         <div class="table-responsive">
             <table id="kategori-barang-table" class="table table-striped table-bordered" style="width:100%">
                 <thead>
                     <tr>
                         <th>Nama Kategori</th>
+                        @if (auth()->check() && auth()->user()->hak_akses == "Admin")
                         <th>Aksi</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($kategoriBarangs as $kategoriBarang)
                     <tr>
                         <td>{{ $kategoriBarang->nama_kategori }}</td>
+                        @if (auth()->check() && auth()->user()->hak_akses == "Admin")
                         <td>
                             <a href="{{ route('kategori-barang.index', $kategoriBarang->id) }}" style="color: orange"><i class='bx bx-xs bx-edit-alt'></i></a>
                         </td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>

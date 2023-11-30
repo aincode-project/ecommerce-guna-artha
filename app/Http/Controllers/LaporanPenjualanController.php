@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Penjualan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB as DB;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 class LaporanPenjualanController extends Controller
 {
@@ -20,6 +21,8 @@ class LaporanPenjualanController extends Controller
             ->orderBy('tahun')
             ->get();
 
+        $tahunDipilih = "All";
+
         if ($id == 0) {
             $dataPenjualans = Penjualan::selectRaw('YEAR(tanggal_penjualan) as tahun, MONTHNAME(tanggal_penjualan) as bulan, SUM(total_penjualan) as total_penjualan')
                 ->groupBy('tahun', 'bulan')
@@ -34,10 +37,12 @@ class LaporanPenjualanController extends Controller
                 ->groupBy('tahun', 'bulan')
                 ->orderByDesc('tahun', 'bulan')
                 ->get();
+
+                $tahunDipilih = $request->filter_tahun;
             }
         }
 
-        return view('backend.laporan-penjualan.index', compact('dataPenjualans', 'tahuns'));
+        return view('backend.laporan-penjualan.index', compact('dataPenjualans', 'tahuns', 'tahunDipilih'));
     }
 
     /**
@@ -117,5 +122,23 @@ class LaporanPenjualanController extends Controller
         $dataPenjualans = Penjualan::whereBetween('tanggal_penjualan', [$tanggal_awal, $tanggal_akhir])->get();
 
         return view('backend.laporan-penjualan.show', compact('dataPenjualans'));
+    }
+
+    public function print(Request $request)
+    {
+        if ($request->tahunDipilih == 'All') {
+            $dataPenjualans = Penjualan::all();
+        } else {
+            $dataPenjualans = Penjualan::selectRaw('YEAR(tanggal_penjualan) as tahun, MONTHNAME(tanggal_penjualan) as bulan, SUM(total_penjualan) as total_penjualan')
+            ->whereYear('tanggal_penjualan', $request->tahunDipilih)
+            ->groupBy('tahun', 'bulan')
+            ->orderByDesc('tahun', 'bulan')
+            ->get();
+        }
+
+        // $pdf = PDF::make();
+        $pdf = PDF::loadView('backend.laporan-penjualan.print', compact('dataPenjualans'));
+
+        return $pdf->stream('laporan-penjualan_' . $request->tahunDipilih . '.pdf');
     }
 }

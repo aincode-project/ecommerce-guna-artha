@@ -45,7 +45,7 @@
                 <tbody>
                     @foreach ($dataPenjualans as $dataPenjualan)
                     <tr>
-                        <td>{{ $dataPenjualan->tanggal_penjualan }}</td>
+                        <td>{{ Carbon\Carbon::parse($dataPenjualan->tanggal_penjualan)->format('d F Y') }}</td>
                         <td>{{ $dataPenjualan->customer->nama_customer }}</td>
                         <td>{{ $dataPenjualan->alamat }}</td>
                         <td class="text-end">@currency($dataPenjualan->total_penjualan)</td>

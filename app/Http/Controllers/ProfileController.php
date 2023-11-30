@@ -77,6 +77,11 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validatedData = $request->validate([
+            'image' => ['file', 'mimes:jpeg,jpg,png'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
         if ($request->file('image')) {
             Storage::delete($request->oldFotoPegawai);
             $image = $request->file('image')->store('foto_pegawai');

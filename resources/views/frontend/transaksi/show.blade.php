@@ -11,7 +11,7 @@
                         <div class="wsus__invoice_single">
                             <h5>Detail Tranasksi</h5>
                             <h6>Nama: {{ $pesanan->customer->nama_customer }}</h6>
-                            <p>Tanggal: {{ $pesanan->tanggal_pesanan }}</p>
+                            <p>Tanggal: {{ Carbon\Carbon::parse($pesanan->tanggal_pesanan)->format('d F Y') }}</p>
                             <p>Status: {{ $pesanan->status_pesanan }}</p>
                         </div>
                     </div>

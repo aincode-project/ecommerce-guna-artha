@@ -31,7 +31,9 @@
 <hr/>
 <div class="card">
     <div class="card-body">
+        @if (auth()->check() && auth()->user()->hak_akses == "Admin")
         <button type="button" class="btn btn-sm btn-primary px-3 mb-2" data-bs-toggle="modal" data-bs-target="#stockOpnameModal"><i class='bx bx-plus mr-1'></i>Stock Opname Baru</button>
+        @endif
         <div class="modal fade" id="stockOpnameModal" tabindex="-1" aria-labelledby="stockOpnameModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -75,10 +77,11 @@
                 <tbody>
                     @foreach ($dataStockOpnames as $dataStockOpname)
                     <tr>
-                        <td>{{ $dataStockOpname->tanggal_opname }}</td>
+                        <td>{{ Carbon\Carbon::parse($dataStockOpname->tanggal_opname)->format('d F Y') }}</td>
                         <td>{{ $dataStockOpname->pegawai->nama_pegawai }}</td>
                         <td class="text-end">{{ $dataStockOpname->barang_selisih }}</td>
                         <td>
+                            @if (auth()->check() && auth()->user()->hak_akses == "Admin")
                             <a href="" data-bs-toggle="modal" data-bs-target="#editStockOpnameModal{{ $dataStockOpname->id }}" style="color: orange"><i class='bx bx-xs bx-edit-alt'></i></a>
                             <div class="modal fade" id="editStockOpnameModal{{ $dataStockOpname->id }}" tabindex="-1" aria-labelledby="editStockOpnameModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
@@ -111,6 +114,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
                             <a href="{{ route('stock-opname.show', $dataStockOpname->id) }}" style="color: skyblue"><i class='bx bx-xs bx-info-circle' ></i></a>
                         </td>
                     </tr>

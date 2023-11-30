@@ -42,7 +42,9 @@
                         <th>Stok Fisik</th>
                         <th>Selisih</th>
                         {{-- <th>Keterangan</th> --}}
+                        @if (auth()->check() && auth()->user()->hak_akses == "Admin")
                         <th>Aksi</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -54,6 +56,7 @@
                         <td class="text-end">{{ $detailStockOpname->stok_fisik }}</td>
                         <td class="text-end">{{ $detailStockOpname->selisih }}</td>
                         {{-- <td>{{ $detailStockOpname->keterangan }}</td> --}}
+                        @if (auth()->check() && auth()->user()->hak_akses == "Admin")
                         <td>
                             <a href="" data-bs-toggle="modal" data-bs-target="#barangOpnameModal{{ $detailStockOpname->id }}" style="color: orange"><i class='bx bx-sm bx-list-plus'></i></a>
                             <div class="modal fade" id="barangOpnameModal{{ $detailStockOpname->id }}" tabindex="-1" aria-labelledby="barangOpnameModalLabel" aria-hidden="true">
@@ -98,6 +101,7 @@
                                 </div>
                             </div>
                         </td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>

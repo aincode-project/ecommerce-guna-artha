@@ -46,7 +46,7 @@
                     @foreach ($users as $user)
                     <tr>
                         <td>
-                            @if ($user->hak_akses == "Pegawai")
+                            @if ($user->hak_akses == "Admin" || $user->hak_akses == "Kepala BUMDes")
                             <a href="{{ route('pegawai.show', $user->pegawai->id) }}">{{ $user->name }}</a>
                             @else
                             <a href="{{ route('customer.show', $user->customer->id) }}">{{ $user->name }}</a>

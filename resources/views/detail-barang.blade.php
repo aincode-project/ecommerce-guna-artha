@@ -63,9 +63,7 @@
                                 @endif
                         </div>
                         <ul class="wsus__button_area">
-                            <li><button class="add_cart" @guest
-                                disabled
-                            @endguest @if ($dataBarang->total_stok == 0)
+                            <li><button class="add_cart" @if ($dataBarang->total_stok == 0)
                                 disabled
                             @endif>Tambah ke Keranjang</button></li>
                         </ul>

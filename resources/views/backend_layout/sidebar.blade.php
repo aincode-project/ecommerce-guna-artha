@@ -25,10 +25,12 @@
             <ul>
                 <li> <a href="{{ route('customer.index') }}"><i class="bx bx-right-arrow-alt"></i>Data Customer</a>
                 </li>
+                @if (auth()->check() && auth()->user()->hak_akses == "Kepala BUMDes")
                 <li> <a href="{{ route('pegawai.index') }}"><i class="bx bx-right-arrow-alt"></i>Data Pegawai</a>
                 </li>
                 <li> <a href="{{ route('user.index') }}"><i class="bx bx-right-arrow-alt"></i>Data User</a>
                 </li>
+                @endif
                 <li> <a href="{{ route('kategori-barang.index', 0) }}"><i class="bx bx-right-arrow-alt"></i>Data Kategori Barang</a>
                 </li>
                 <li> <a href="{{ route('barang.index') }}"><i class="bx bx-right-arrow-alt"></i>Data Barang</a>

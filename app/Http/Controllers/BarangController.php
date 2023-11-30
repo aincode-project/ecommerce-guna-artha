@@ -42,6 +42,14 @@ class BarangController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'kode_barang' => ['required', 'numeric', 'unique:barangs,kode_barang'],
+            'nama_barang' => ['required', 'unique:barangs,nama_barang'],
+            'harga_jual' => ['required', 'numeric'],
+            'keterangan' => ['required'],
+            'foto_barang' => ['required', 'file', 'mimes:jpeg,jpg,png'],
+        ]);
+
         $foto_barang = $request->file('foto_barang')->store('foto_barang');
 
         Barang::create([
@@ -91,6 +99,14 @@ class BarangController extends Controller
      */
     public function update(Request $request, Barang $barang)
     {
+        $validatedData = $request->validate([
+            'kode_barang' => 'required|numeric|unique:barangs,kode_barang,' . $barang->id,
+            'nama_barang' => 'required|unique:barangs,nama_barang,' . $barang->id,
+            'harga_jual' => ['required', 'numeric'],
+            'keterangan' => ['required'],
+            'foto_barang' => ['file', 'mimes:jpeg,jpg,png'],
+        ]);
+
         if ($request->file('foto_barang')) {
             Storage::delete($request->oldFotoBarang);
             $foto_barang = $request->file('foto_barang')->store('foto_barang');
@@ -131,6 +147,10 @@ class BarangController extends Controller
 
     public function addStockStore(Request $request, $id)
     {
+        $validatedData = $request->validate([
+            'jumlah_stok' => ['required', 'numeric'],
+        ]);
+
         Barang::where('id', $id)->update([
             'total_stok' => $request->jumlah_stok + $request->stokLama
         ]);
@@ -154,6 +174,10 @@ class BarangController extends Controller
 
     public function deleteStockStore(Request $request, $id)
     {
+        $validatedData = $request->validate([
+            'jumlah_stok' => ['required', 'numeric'],
+        ]);
+
         Barang::where('id', $id)->update([
             'total_stok' => $request->stokLama - $request->jumlah_stok,
         ]);

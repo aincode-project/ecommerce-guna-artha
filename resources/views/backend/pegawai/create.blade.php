@@ -106,8 +106,8 @@
                 <div class="col-6">
                     <label for="posisi" class="form-label">Posisi</label>
                     <select class="form-select" id="posisi" name="posisi" aria-label="Default select example">
-                        <option value="Pegawai" selected>Pegawai</option>
-                        <option value="Admin">Admin</option>
+                        <option value="Admin" selected>Admin</option>
+                        <option value="Kepala BUMDes">Kepala BUMDes</option>
                     </select>
                 </div>
                 <div class="col-12">

@@ -20,6 +20,12 @@ class ProfilCustomerController extends Controller
 
     public function update(Request $request, $id)
     {
+        $validatedData = $request->validate([
+            'image' => ['file', 'mimes:jpeg,jpg,png'],
+            'nama_customer' => 'required|string',
+            'no_telp' => 'required|numeric',
+        ]);
+
         if ($request->file('image')) {
             Storage::delete($request->oldFotoCustomer);
             $image = $request->file('image')->store('foto_customer');

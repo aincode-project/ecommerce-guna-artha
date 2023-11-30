@@ -19,9 +19,9 @@ class HomeUserController extends Controller
     public function index($id)
     {
         if ($id == 0) {
-            $dataBarangs = Barang::paginate(15);
+            $dataBarangs = Barang::latest()->filter(request(['search', 'category']));
         } else {
-            $dataBarangs = Barang::where('kategori_barang_id', $id)->paginate(15);
+            $dataBarangs = Barang::where('kategori_barang_id', $id)->filter(request(['search', 'category']));
         }
 
         $dataKategoriBarangs = KategoriBarang::all();
@@ -35,8 +35,12 @@ class HomeUserController extends Controller
             }
         }
 
-
-        return view('landing-page', compact('dataKategoriBarangs', 'dataBarangs', 'dataKeranjangs', 'totalKeranjang'));
+        return view('landing-page', [
+            "dataKategoriBarangs" => $dataKategoriBarangs,
+            "dataBarangs" => $dataBarangs->paginate(15),
+            "dataKeranjangs" => $dataKeranjangs,
+            "totalKeranjang" => $totalKeranjang
+        ]);
     }
 
     /**

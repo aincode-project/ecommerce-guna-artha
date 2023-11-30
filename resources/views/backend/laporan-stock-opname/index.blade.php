@@ -33,7 +33,7 @@
     <div class="card-body">
         <div class="row mb-3">
             <div class="text-end col-md">
-                <a href="" class="btn btn-success">Print</a>
+                <a href="{{ route('laporanStockOpname.print') }}" class="btn btn-outline-success">Cetak Laporan</a>
             </div>
         </div>
         <div class="table-responsive">
@@ -48,7 +48,7 @@
                 <tbody>
                     @foreach ($dataOpnames as $dataOpname)
                     <tr>
-                        <td>{{ $dataOpname->tanggal_opname }}</td>
+                        <td>{{ Carbon\Carbon::parse($dataOpname->tanggal_opname)->format('d F Y') }}</td>
                         <td>{{ $dataOpname->pegawai->nama_pegawai }}</td>
                         <td>
                             @foreach ($dataOpname->detail_stock_opname as $item)

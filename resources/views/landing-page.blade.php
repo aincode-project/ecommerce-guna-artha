@@ -24,7 +24,7 @@
                                     <ul>
                                         @foreach ($dataKategoriBarangs as $dataKategoriBarang)
                                         <li>
-                                            <a href="{{ route('home-user.index', $dataKategoriBarang->id) }}">{{ $dataKategoriBarang->nama_kategori }}</a>
+                                            <a href="/home-user/{{$dataKategoriBarang->id}}?category={{ $dataKategoriBarang->nama_kategori }}">{{ $dataKategoriBarang->nama_kategori }}</a>
                                         </li>
                                         @endforeach
                                     </ul>
@@ -67,39 +67,50 @@
                         <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
                             aria-labelledby="v-pills-home-tab">
                             <div class="row">
-                                @foreach ($dataBarangs as $dataBarang)
-                                <div class="col-xl-4  col-sm-6">
-                                    <div class="wsus__product_item">
-                                        {{-- <span class="wsus__new">New</span> --}}
-                                        @if ($dataBarang->total_stok == 0)
-                                        <span class="btn btn-danger btn-sm" style="border-radius: 25px">Kosong</span>
-                                        @endif
-                                        <a class="wsus__pro_link" href="{{ route('home-user.show', $dataBarang->id) }}">
-                                            <img src="{{ asset('storage/' . $dataBarang->foto_barang) }}" alt="product"
-                                                class="img-fluid w-100 img_1" />
-                                            <img src="{{ asset('storage/' . $dataBarang->foto_barang) }}" alt="product"
-                                                class="img-fluid w-100 img_2" />
-                                        </a>
-                                        <div class="wsus__product_details">
-                                            <a class="wsus__category" href="{{ route('home-user.index', $dataBarang->kategori_barang_id) }}">{{ $dataBarang->kategori_barang->nama_kategori }} </a>
-                                            {{-- <p class="wsus__pro_rating">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star-half-alt"></i>
-                                                <span>(17 review)</span>
-                                            </p> --}}
-                                            <a class="wsus__pro_name" href="{{ route('home-user.show', $dataBarang->id) }}">{{ $dataBarang->nama_barang }}</a>
-                                            <p class="wsus__price">@currency($dataBarang->harga_jual)</p>
-                                            @if ($dataBarang->jumlah_terjual != 0)
-                                            <p class="wsus__category">{{ $dataBarang->jumlah_terjual }} Terjual</p>
-                                            @endif
-                                            {{-- <a class="add_cart" href="#">add to cart</a> --}}
+                                @if ($dataBarangs->count() == 0)
+                                    <div class="row">
+                                        <div class="col-xl-12">
+                                            <div class="wsus__cart_list cart_empty p-3 p-sm-5 text-center">
+                                                <p class="mb-4">Belum ada produk di kategori ini!</p>
+                                                <a href="{{ route('home-user.index', 0) }}" class="common_btn"><i class="fal fa-store me-2"></i>Lihat Produk Lainnya</a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                @endforeach
+                                @else
+                                    @foreach ($dataBarangs as $dataBarang)
+                                    <div class="col-xl-4  col-sm-6">
+                                        <div class="wsus__product_item">
+                                            {{-- <span class="wsus__new">New</span> --}}
+                                            @if ($dataBarang->total_stok == 0)
+                                            <span class="btn btn-danger btn-sm" style="border-radius: 25px">Kosong</span>
+                                            @endif
+                                            <a class="wsus__pro_link" href="{{ route('home-user.show', $dataBarang->id) }}">
+                                                <img src="{{ asset('storage/' . $dataBarang->foto_barang) }}" alt="product"
+                                                    class="img-fluid w-100 img_1" />
+                                                <img src="{{ asset('storage/' . $dataBarang->foto_barang) }}" alt="product"
+                                                    class="img-fluid w-100 img_2" />
+                                            </a>
+                                            <div class="wsus__product_details">
+                                                <a class="wsus__category" href="/home-user/{{$dataBarang->kategori_barang->id}}?category={{ $dataBarang->kategori_barang->nama_kategori }}">{{ $dataBarang->kategori_barang->nama_kategori }} </a>
+                                                {{-- <p class="wsus__pro_rating">
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star"></i>
+                                                    <i class="fas fa-star-half-alt"></i>
+                                                    <span>(17 review)</span>
+                                                </p> --}}
+                                                <a class="wsus__pro_name" href="{{ route('home-user.show', $dataBarang->id) }}">{{ $dataBarang->nama_barang }}</a>
+                                                <p class="wsus__price">@currency($dataBarang->harga_jual)</p>
+                                                @if ($dataBarang->jumlah_terjual != 0)
+                                                <p class="wsus__category">{{ $dataBarang->jumlah_terjual }} Terjual</p>
+                                                @endif
+                                                {{-- <a class="add_cart" href="#">add to cart</a> --}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endforeach
+                                @endif
                             </div>
                         </div>
                     </div>

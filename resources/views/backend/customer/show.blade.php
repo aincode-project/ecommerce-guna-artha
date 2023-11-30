@@ -60,10 +60,38 @@
                                 <input type="text" class="form-control" disabled value="{{ $customer->no_telp }}" />
                             </div>
                         </div>
+                        <hr>
+                        <div class="table-responsive">
+                            <table id="pesanan-table" class="table table-striped table-bordered" style="width:100%">
+                                <thead class="text-center" style="background-color: rgb(53, 146, 213); color: white">
+                                    <tr>
+                                        <th>Tanggal</th>
+                                        <th>Alamat</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($dataPesanans as $dataPesanan)
+                                    <tr>
+                                        <td>{{ Carbon\Carbon::parse($dataPesanan->tanggal_pesanan)->format('d F Y') }}</td>
+                                        <td>{{ $dataPesanan->alamat }}</td>
+                                        <td class="text-end">@currency($dataPesanan->total_pesanan)</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@endsection
+@section('backend-script')
+<script>
+    $(document).ready(function() {
+        $('#pesanan-table').DataTable();
+        } );
+</script>
 @endsection

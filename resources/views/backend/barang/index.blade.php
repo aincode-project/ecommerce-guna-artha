@@ -31,7 +31,9 @@
 <hr/>
 <div class="card">
     <div class="card-body">
+        @if (auth()->check() && auth()->user()->hak_akses == "Admin")
         <a href="{{ route('barang.create') }}" class="btn btn-sm btn-primary px-3 mb-2"><i class='bx bx-plus mr-1'></i>Tambah Barang</a>
+        @endif
         <div class="table-responsive">
             <table id="barang-table" class="table table-striped table-bordered" style="width:100%">
                 <thead class="text-center" style="background-color: rgb(53, 146, 213); color: white">
@@ -54,16 +56,20 @@
                                 <div class="col-md-8">
                                     {{ $dataBarang->total_stok }}
                                 </div>
+                                @if (auth()->check() && auth()->user()->hak_akses == "Admin")
                                 <div class="col-md-2">
                                     <a href="{{ route('barang.addStock', $dataBarang->id) }}" style="color: rgb(47, 255, 151)"><i class='bx bx-xs bx-plus'></i></a>
                                     @if ($dataBarang->total_stok != 0)
                                     <a href="{{ route('barang.deleteStock', $dataBarang->id) }}" style="color: rgba(255, 72, 0, 0.993)"><i class='bx bx-xs bx-minus'></i></a>
                                     @endif
                                 </div>
+                                @endif
                             </div>
                         </td>
                         <td>
+                            @if (auth()->check() && auth()->user()->hak_akses == "Admin")
                             <a href="{{ route('barang.edit', $dataBarang->id) }}" style="color: orange"><i class='bx bx-xs bx-edit-alt'></i></a>
+                            @endif
                             <a href="{{ route('barang.show', $dataBarang->id) }}" style="color: skyblue"><i class='bx bx-xs bx-info-circle' ></i></a>
                         </td>
                     </tr>

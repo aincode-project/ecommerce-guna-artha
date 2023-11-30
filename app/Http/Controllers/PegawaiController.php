@@ -42,9 +42,8 @@ class PegawaiController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'nama_pegawai' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
             'NIK' => ['required', 'min:16'],
             'alamat' => ['required', 'string'],
             'no_telp' => ['required', 'min:10'],
@@ -54,7 +53,7 @@ class PegawaiController extends Controller
         $image = $request->file('image')->store('foto_pegawai');
 
         $dataUser = User::create([
-            'nama_pegawai' => $request->nama_pegawai,
+            'name' => $request->nama_pegawai,
             'email' => $request->email,
             'password' => Hash::make("password"),
             'hak_akses' => $request->posisi,

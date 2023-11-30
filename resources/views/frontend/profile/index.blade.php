@@ -15,7 +15,12 @@
                 <div class="col-xl-6 col-md-6">
                   <div class="wsus__dash_pro_single">
                     <i class="fas fa-user-tie"></i>
-                    <input type="text" name="name" placeholder="Full Name" value="{{ $dataCustomer->nama_customer }}">
+                    <input type="text" name="name" class="@error('name') is-invalid @enderror" placeholder="Full Name" value="{{ $dataCustomer->nama_customer }}">
+                    @error('name')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                   </div>
                 </div>
                 <div class="col-xl-6 col-md-6">
@@ -30,7 +35,12 @@
                 <div class="col-xl-6 col-md-6">
                   <div class="wsus__dash_pro_single">
                     <i class="far fa-phone-alt"></i>
-                    <input type="text" name="no_telp" placeholder="No Telp" value="{{ $dataCustomer->no_telp }}">
+                    <input type="text" class="@error('no_telp') is-invalid @enderror" name="no_telp" placeholder="No Telp" value="{{ $dataCustomer->no_telp }}">
+                    @error('no_telp')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                   </div>
                 </div>
                 <div class="col-xl-6 col-md-6">
@@ -46,6 +56,11 @@
                 <input type="hidden" name="oldFotoCustomer" value="{{ $dataCustomer->image }}">
                 <img src="{{ asset('storage/' . $dataCustomer->image) }}" class="img-preview img-fluid w-100">
                 <input type="file" class="@error('image') is-invalid @enderror" id="image" name="image" value="{{ old('image') }}" onchange="previewImage()">
+                @error('image')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
               </div>
             </div>
             <div class="col-xl-12">
@@ -67,6 +82,11 @@
                   <div class="wsus__dash_pro_single">
                     <i class="fas fa-lock-alt"></i>
                     <input id="password" type="password" class="@error('password') is-invalid @enderror" name="password" autocomplete="new-password" placeholder="New Password">
+                    @error('password')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
                   </div>
                 </div>
                 <div class="col-xl-4">

@@ -36,20 +36,22 @@
             <div class="col-xl-6 col-md-6 ">
                     <h5>Detail Tranasksi</h5>
                     <h6>Nama: {{ $pesanan->customer->nama_customer }}</h6>
-                    <p class="mb-2">Tanggal: {{ $pesanan->tanggal_pesanan }}</p>
+                    <p class="mb-2">Tanggal: {{ Carbon\Carbon::parse($pesanan->tanggal_pesanan)->format('d F Y') }}</p>
                     <p>Status: {{ $pesanan->status_pesanan }}</p>
-                    @if ($pesanan->status_pesanan == "Dipesan")
-                        <form action="{{ route('pesanan.kirim', $pesanan->id) }}" method="POST">
-                            @method('PUT')
-                            @csrf
-                            <button class="btn btn-sm btn-outline-warning"><i class='bx bx-xs bx-paper-plane'></i> Kirim</button>
-                        </form>
-                    @elseif ($pesanan->status_pesanan == "Dikirim")
-                        <form action="{{ route('pesanan.konfirmasi', $pesanan->id) }}" method="POST">
-                            @method('PUT')
-                            @csrf
-                            <button class="btn btn-sm btn-outline-success"><i class='bx bx-xs bx-check-circle'></i> Konfirmasi</button>
-                        </form>
+                    @if (auth()->check() && auth()->user()->hak_akses == "Admin")
+                        @if ($pesanan->status_pesanan == "Dipesan")
+                            <form action="{{ route('pesanan.kirim', $pesanan->id) }}" method="POST">
+                                @method('PUT')
+                                @csrf
+                                <button class="btn btn-sm btn-outline-warning"><i class='bx bx-xs bx-paper-plane'></i> Kirim</button>
+                            </form>
+                        @elseif ($pesanan->status_pesanan == "Dikirim")
+                            <form action="{{ route('pesanan.konfirmasi', $pesanan->id) }}" method="POST">
+                                @method('PUT')
+                                @csrf
+                                <button class="btn btn-sm btn-outline-success"><i class='bx bx-xs bx-check-circle'></i> Konfirmasi</button>
+                            </form>
+                        @endif
                     @endif
             </div>
             <div class="col-xl-6 col-md-6">

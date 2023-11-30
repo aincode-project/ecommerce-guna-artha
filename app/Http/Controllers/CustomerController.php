@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Http\Requests\UpdateCustomerRequest;
+use App\Models\Pesanan;
 
 class CustomerController extends Controller
 {
@@ -49,7 +50,9 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-        return view('backend.customer.show', compact('customer'));
+        $dataPesanans = Pesanan::where('customer_id', $customer->id)->get();
+
+        return view('backend.customer.show', compact('customer', 'dataPesanans'));
     }
 
     /**

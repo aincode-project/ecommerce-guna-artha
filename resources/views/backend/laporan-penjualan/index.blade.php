@@ -45,11 +45,15 @@
                 <div class="col-md-2">
                     <button type="submit" class="btn btn-outline-primary">Filter</button>
                 </div>
-                {{-- <div class="text-end col-md-6">
-                    <a href="" class="btn btn-success">Print</a>
-                </div> --}}
+            </form>
+                <div class="text-end col-md-6">
+                    <form action="{{ route('laporanPenjualan.print') }}">
+                        <input type="hidden" name="tahunDipilih" value="{{ $tahunDipilih }}">
+                        <button type="submit" class="btn btn-outline-success">Cetak Laporan</button>
+                    </form>
+                </div>
             </div>
-        </form>
+
         <div class="table-responsive">
             <table id="laporan-penjualan-table" class="table table-striped table-bordered" style="width:100%">
                 <thead class="text-center" style="background-color: rgb(53, 146, 213); color: white">

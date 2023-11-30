@@ -18,7 +18,7 @@
                   <tbody>
                     @foreach ($dataPesanans as $dataPesanan)
                     <tr>
-                        <td>{{ $dataPesanan->tanggal_pesanan }}</td>
+                        <td>{{ Carbon\Carbon::parse($dataPesanan->tanggal_pesanan)->format('d F Y') }}</td>
                         <td class="text-end">@currency($dataPesanan->total_pesanan)</td>
                         <td>{{ $dataPesanan->status_pesanan }}</td>
                         <td class="text-center"><a class="btn btn-outline-primary btn-sm" href="{{ route('transaksi.show', $dataPesanan) }}">view</a></td>

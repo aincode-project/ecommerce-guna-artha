@@ -86,6 +86,10 @@ class KategoriBarangController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $validatedData = $request->validate([
+            'nama_kategori' => 'required|string|unique:kategori_barangs,nama_kategori,' . $id,
+        ]);
+
         KategoriBarang::where('id', $id)->update([
             'nama_kategori' => $request->nama_kategori
         ]);

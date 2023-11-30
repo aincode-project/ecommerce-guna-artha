@@ -29,7 +29,7 @@
 ==============================-->
 <section id="wsus__cart_view">
     <div class="container">
-        <form class="wsus__checkout_form" action="{{ route('checkout.checkout') }}" method="POST">
+        <form id="myForm" class="wsus__checkout_form" action="{{ route('checkout.checkout') }}" method="POST">
             @csrf
             <div class="row">
                 <div class="col-xl-7 col-lg-6">
@@ -67,7 +67,7 @@
                             <p><b>total:</b> <span><b>@currency($totalKeranjang)</b></span></p>
                             <input type="hidden" name="total_pesanan" value="{{ $totalKeranjang }}">
                         </div>
-                        <button class="common_btn">Proses Pesanan</button>
+                        <button type="button" onclick="konfirmasiPemesanan()" class="common_btn">Proses Pesanan</button>
                     </div>
                 </div>
             </div>
@@ -137,5 +137,22 @@
 @endsection
 
 @section('frontend-script')
+<script>
+    function konfirmasiPemesanan() {
+        // Munculkan alert konfirmasi
+        var konfirmasi = confirm("Apakah Anda yakin ingin melakukan proses pemesanan?");
 
+        // Cek hasil konfirmasi
+        if (konfirmasi) {
+            // Jika user menekan "OK", lakukan proses pemesanan
+            var form = document.getElementById("myForm");
+            // Lakukan sesuatu dengan data formulir, misalnya kirim ke server
+            alert("Proses pemesanan berhasil dilakukan!");
+            form.submit(); // Ini hanya contoh, sesuaikan dengan kebutuhan Anda
+        } else {
+            // Jika user menekan "Batal", berikan feedback atau lakukan sesuatu
+            alert("Proses pemesanan dibatalkan.");
+        }
+    }
+</script>
 @endsection

@@ -112,8 +112,8 @@
                 <div class="col-6">
                     <label for="posisi" class="form-label">Posisi</label>
                     <select class="form-select" id="posisi" name="posisi" aria-label="Default select example">
-                        <option value="Pegawai" {{ $pegawai->posisi == "Pegawai" ? 'selected' : '' }}>Pegawai</option>
                         <option value="Admin" {{ $pegawai->posisi == "Admin" ? 'selected' : '' }}>Admin</option>
+                        <option value="Kepala BUMDes" {{ $pegawai->posisi == "Kepala BUMDes" ? 'selected' : '' }}>Kepala BUMDes</option>
                     </select>
                 </div>
                 <div class="col-12">

@@ -38,6 +38,14 @@ class AlamatCustomerController extends Controller
      */
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'nama_penerima' => 'required|string',
+            'alamat' => 'required|string',
+            'no_telp' => 'required|numeric',
+            'tipe_alamat' => 'required|string',
+            'keterangan' => 'string',
+        ]);
+
         AlamatCustomer::create([
             'nama_penerima' => $request->nama_penerima,
             'alamat' => $request->alamat,
@@ -81,6 +89,13 @@ class AlamatCustomerController extends Controller
      */
     public function update(Request $request, AlamatCustomer $alamatCustomer)
     {
+        $validatedData = $request->validate([
+            'nama_penerima' => 'required|string',
+            'alamat' => 'required',
+            'no_telp' => 'required|numeric',
+            'tipe_alamat' => 'required|string',
+        ]);
+
         $alamatCustomer->update([
             'nama_penerima' => $request->nama_penerima,
             'alamat' => $request->alamat,

@@ -15,8 +15,11 @@
             </div>
             <div class="col-xl-5 col-md-6 col-lg-4 d-none d-lg-block">
                 <div class="wsus__search">
-                    <form>
-                        <input type="text" placeholder="Search...">
+                    <form action="/home-user/0">
+                        @if (request('category'))
+                            <input type="hidden" name="category" value="{{ request('category') }}">
+                        @endif
+                        <input type="text" placeholder="Search..." name="search">
                         <button type="submit"><i class="far fa-search"></i></button>
                     </form>
                 </div>

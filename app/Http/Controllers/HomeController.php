@@ -36,6 +36,10 @@ class HomeController extends Controller
             $totalCustomer = Customer::all()->count();
             $jumlahTransaksi = Pesanan::all()->count();
             $totalPenjualan = Penjualan::all()->sum('total_penjualan');
+            $totalBarangTerjual = Barang::all()->sum('jumlah_terjual');
+            $totalDiproses = Pesanan::where('status_pesanan', 'Dipesan')->count();
+            $totalDikirim = Pesanan::where('status_pesanan', 'Dikirim')->count();
+            $totalDikonfirmasi = Pesanan::where('status_pesanan', 'Dikonfirmasi')->count();
 
             // $total_penjualan = Penjualan::select(DB::raw("CAST(SUM(total_penjualan) as int) as total_penjualan"))
             //     ->GroupBy(DB::raw("Month(tanggal_penjualan)"))
@@ -59,7 +63,7 @@ class HomeController extends Controller
                 ->GroupBy(DB::raw("nama_barang"))
                 ->pluck('nama_barang');
 
-            return view('home', compact('totalBarang', 'totalCustomer', 'jumlahTransaksi', 'totalPenjualan', 'nama_barang', 'jumlah_terjual', 'tahun'));
+            return view('home', compact('totalBarang', 'totalCustomer', 'jumlahTransaksi', 'totalPenjualan', 'nama_barang', 'jumlah_terjual', 'tahun', 'totalBarangTerjual', 'totalDiproses', 'totalDikirim', 'totalDikonfirmasi'));
         }
 
     }

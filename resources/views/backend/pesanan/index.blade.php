@@ -39,6 +39,7 @@
                         <th>Nama Customer</th>
                         <th>Alamat</th>
                         <th>Total</th>
+                        <th>Status</th>
                         <th>Detail</th>
                     </tr>
                 </thead>
@@ -49,6 +50,7 @@
                         <td>{{ $dataPesanan->customer->nama_customer }}</td>
                         <td>{{ $dataPesanan->alamat }}</td>
                         <td class="text-end">@currency($dataPesanan->total_pesanan)</td>
+                        <td>{{ $dataPesanan->status_pesanan }}</td>
                         <td class="text-center">
                             <a href="{{ route('pesanan.show', $dataPesanan->id) }}" class="btn btn-outline-primary btn-sm">Lihat</a>
                         </td>

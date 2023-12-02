@@ -19,9 +19,9 @@ class HomeUserController extends Controller
     public function index($id)
     {
         if ($id == 0) {
-            $dataBarangs = Barang::latest()->filter(request(['search', 'category']));
+            $dataBarangs = Barang::filter(request(['search']));
         } else {
-            $dataBarangs = Barang::where('kategori_barang_id', $id)->filter(request(['search', 'category']));
+            $dataBarangs = Barang::where('kategori_barang_id', $id)->filter(request(['search']));
         }
 
         $dataKategoriBarangs = KategoriBarang::all();

@@ -54,13 +54,15 @@ class HomeController extends Controller
                 ->pluck('tahun');
 
             $jumlah_terjual = Barang::select(DB::raw("CAST(SUM(jumlah_terjual) as int) as jumlah_terjual"))
-                // ->take(2)
                 ->GroupBy(DB::raw("nama_barang"))
+                ->orderBy('jumlah_terjual', 'desc')
+                ->take(10)
                 ->pluck('jumlah_terjual');
 
             $nama_barang = Barang::select(DB::raw("nama_barang"))
-                // ->take(2)
                 ->GroupBy(DB::raw("nama_barang"))
+                ->orderBy('jumlah_terjual', 'desc')
+                ->take(10)
                 ->pluck('nama_barang');
 
             return view('home', compact('totalBarang', 'totalCustomer', 'jumlahTransaksi', 'totalPenjualan', 'nama_barang', 'jumlah_terjual', 'tahun', 'totalBarangTerjual', 'totalDiproses', 'totalDikirim', 'totalDikonfirmasi'));

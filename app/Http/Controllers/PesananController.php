@@ -101,30 +101,37 @@ class PesananController extends Controller
 
     public function konfirmasiPesanan($id)
     {
-        Pesanan::where('id', $id)->update([
-            'status_pesanan' => "Dikonfirmasi",
-        ]);
-
         $dataPesanan = Pesanan::where('id', $id)->first();
 
-        $dataPenjualan = Penjualan::create([
-           'customer_id' => $dataPesanan->customer_id,
-           'pegawai_id' => $dataPesanan->pegawai_id,
-           'nama_penerima' => $dataPesanan->nama_penerima,
-           'alamat' => $dataPesanan->alamat,
-           'no_telp' => $dataPesanan->no_telp,
-           'keterangan_alamat' => $dataPesanan->keterangan_alamat,
-           'total_penjualan' => $dataPesanan->total_pesanan,
-        ]);
-
-        $dataDetailPesanan = DetailPesanan::where('pesanan_id', $id)->get();
-        foreach ($dataDetailPesanan as $key => $value) {
-            DetailPenjualan::create([
-                'penjualan_id' => $dataPenjualan->id,
-                'barang_id' => $value->barang_id,
-                'harga_barang' => $value->barang->harga_jual,
-                'jumlah' => $value->jumlah
+        if ($dataPesanan->status_pesanan == "Dikonfirmasi") {
+            Pesanan::where('id', $id)->update([
+                'konfirmasi_admin' => "Dikonfirmasi",
             ]);
+        } else {
+            Pesanan::where('id', $id)->update([
+                'status_pesanan' => "Dikonfirmasi",
+                'konfirmasi_admin' => "Dikonfirmasi",
+            ]);
+
+            $dataPenjualan = Penjualan::create([
+               'customer_id' => $dataPesanan->customer_id,
+               'pegawai_id' => $dataPesanan->pegawai_id,
+               'nama_penerima' => $dataPesanan->nama_penerima,
+               'alamat' => $dataPesanan->alamat,
+               'no_telp' => $dataPesanan->no_telp,
+               'keterangan_alamat' => $dataPesanan->keterangan_alamat,
+               'total_penjualan' => $dataPesanan->total_pesanan,
+            ]);
+
+            $dataDetailPesanan = DetailPesanan::where('pesanan_id', $id)->get();
+            foreach ($dataDetailPesanan as $key => $value) {
+                DetailPenjualan::create([
+                    'penjualan_id' => $dataPenjualan->id,
+                    'barang_id' => $value->barang_id,
+                    'harga_barang' => $value->barang->harga_jual,
+                    'jumlah' => $value->jumlah
+                ]);
+            }
         }
 
         return redirect()->route('pesanan.show', $id);

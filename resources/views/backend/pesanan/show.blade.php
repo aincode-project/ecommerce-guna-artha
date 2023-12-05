@@ -45,7 +45,7 @@
                                 @csrf
                                 <button class="btn btn-sm btn-outline-warning"><i class='bx bx-xs bx-paper-plane'></i> Kirim</button>
                             </form>
-                        @elseif ($pesanan->status_pesanan == "Dikirim")
+                        @elseif (($pesanan->status_pesanan == "Dikirim" || $pesanan->status_pesanan == "Dikonfirmasi") && $pesanan->konfirmasi_admin == "Belum Dikonfirmasi")
                             <form action="{{ route('pesanan.konfirmasi', $pesanan->id) }}" method="POST">
                                 @method('PUT')
                                 @csrf

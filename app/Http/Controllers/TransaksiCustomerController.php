@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pesanan;
+use App\Models\Penjualan;
 use Illuminate\Http\Request;
+use App\Models\DetailPesanan;
+use App\Models\DetailPenjualan;
 
 class TransaksiCustomerController extends Controller
 {
@@ -70,9 +73,42 @@ class TransaksiCustomerController extends Controller
      * @param  \App\Models\Pesanan  $pesanan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Pesanan $pesanan)
+    public function update(Request $request, $id)
     {
-        //
+        $dataPesanan = Pesanan::where('id', $id)->first();
+
+        if ($dataPesanan->status_pesanan == "Dikonfirmasi") {
+            Pesanan::where('id', $id)->update([
+                'konfirmasi_customer' => "Dikonfirmasi",
+            ]);
+        } else {
+            Pesanan::where('id', $id)->update([
+                'status_pesanan' => "Dikonfirmasi",
+                'konfirmasi_customer' => "Dikonfirmasi",
+            ]);
+
+            $dataPenjualan = Penjualan::create([
+               'customer_id' => $dataPesanan->customer_id,
+               'pegawai_id' => $dataPesanan->pegawai_id,
+               'nama_penerima' => $dataPesanan->nama_penerima,
+               'alamat' => $dataPesanan->alamat,
+               'no_telp' => $dataPesanan->no_telp,
+               'keterangan_alamat' => $dataPesanan->keterangan_alamat,
+               'total_penjualan' => $dataPesanan->total_pesanan,
+            ]);
+
+            $dataDetailPesanan = DetailPesanan::where('pesanan_id', $id)->get();
+            foreach ($dataDetailPesanan as $key => $value) {
+                DetailPenjualan::create([
+                    'penjualan_id' => $dataPenjualan->id,
+                    'barang_id' => $value->barang_id,
+                    'harga_barang' => $value->barang->harga_jual,
+                    'jumlah' => $value->jumlah
+                ]);
+            }
+        }
+
+        return redirect()->back();
     }
 
     /**

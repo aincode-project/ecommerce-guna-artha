@@ -13,6 +13,13 @@
                             <h6>Nama: {{ $pesanan->customer->nama_customer }}</h6>
                             <p>Tanggal: {{ Carbon\Carbon::parse($pesanan->tanggal_pesanan)->format('d F Y') }}</p>
                             <p>Status: {{ $pesanan->status_pesanan }}</p>
+                            @if (($pesanan->status_pesanan == "Dikirim" || $pesanan->status_pesanan == "Dikonfirmasi") && $pesanan->konfirmasi_customer == "Belum Dikonfirmasi")
+                                <form action="{{ route('transaksi.update', $pesanan->id) }}" method="POST">
+                                    @method('PUT')
+                                    @csrf
+                                    <button class="btn btn-sm btn-outline-success">Konfirmasi Penerimaan</button>
+                                </form>
+                            @endif
                         </div>
                     </div>
                     <div class="col-xl-6 col-md-6">

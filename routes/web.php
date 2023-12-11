@@ -34,6 +34,7 @@ use App\Http\Controllers\TransaksiCustomerController;
 |
 */
 
+// Test aja
 Route::middleware('auth')->group(function () {
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

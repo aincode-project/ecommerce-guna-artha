@@ -10,7 +10,7 @@
                 <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="bx bx-home-alt"></i></a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">Data Pegawai</li>
-                <li class="breadcrumb-item active" aria-current="page">Tambah Pegawai</li>
+                <li class="breadcrumb-item active" aria-current="page">Ubah Pegawai</li>
             </ol>
         </nav>
     </div>

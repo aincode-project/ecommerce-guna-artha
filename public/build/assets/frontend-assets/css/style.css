@@ -5350,7 +5350,7 @@ WISHLIST PAGE START
 }
 
 .wsus__login_input {
-  display: flex;
+  display: block;
   align-items: center;
   margin-top: 25px;
 }

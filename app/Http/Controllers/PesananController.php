@@ -18,7 +18,11 @@ class PesananController extends Controller
      */
     public function index()
     {
-        $dataPesanans = Pesanan::all();
+        if (Auth::user()->hak_akses == "Kepala BUMDes") {
+            $dataPesanans = Pesanan::all();
+        } else {
+            $dataPesanans = Pesanan::where('pegawai_id', Auth::user()->pegawai->id)->orWhere('status_pesanan', 'Dipesan')->get();
+        }
 
         return view('backend.pesanan.index', compact('dataPesanans'));
     }

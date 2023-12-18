@@ -8,23 +8,23 @@
 	<!--favicon-->
 	<link rel="icon" href="{{ asset('storage/logo_bumdes/logo-2.jpg') }}" type="image/png" />
 	<!--plugins-->
-	<link href="{{ asset('build/assets/backend-assets/plugins/vectormap/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet"/>
-	<link href="{{ asset('build/assets/backend-assets/plugins/simplebar/css/simplebar.css') }}" rel="stylesheet" />
-	<link href="{{ asset('build/assets/backend-assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet" />
-	<link href="{{ asset('build/assets/backend-assets/plugins/metismenu/css/metisMenu.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('build/assets/backend-assets/plugins/datatable/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" />
-    <link href="{{ asset('build/assets/backend-assets/plugins/highcharts/css/highcharts.css') }}" rel="stylesheet" />
+	<link href="{{ asset('backend-assets/plugins/vectormap/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet"/>
+	<link href="{{ asset('backend-assets/plugins/simplebar/css/simplebar.css') }}" rel="stylesheet" />
+	<link href="{{ asset('backend-assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet" />
+	<link href="{{ asset('backend-assets/plugins/metismenu/css/metisMenu.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('backend-assets/plugins/datatable/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" />
+    <link href="{{ asset('backend-assets/plugins/highcharts/css/highcharts.css') }}" rel="stylesheet" />
 	<!-- loader-->
-	<link href="{{ asset('build/assets/backend-assets/css/pace.min.css') }}" rel="stylesheet" />
-	<script src="{{ asset('build/assets/backend-assets/js/pace.min.js') }}"></script>
+	<link href="{{ asset('backend-assets/css/pace.min.css') }}" rel="stylesheet" />
+	<script src="{{ asset('backend-assets/js/pace.min.js') }}"></script>
 	<!-- Bootstrap CSS -->
-	<link href="{{ asset('build/assets/backend-assets/css/bootstrap.min.css') }}" rel="stylesheet">
-	<link href="{{ asset('build/assets/backend-assets/css/app.css') }}" rel="stylesheet">
-	<link href="{{ asset('build/assets/backend-assets/css/icons.css') }}" rel="stylesheet">
+	<link href="{{ asset('backend-assets/css/bootstrap.min.css') }}" rel="stylesheet">
+	<link href="{{ asset('backend-assets/css/app.css') }}" rel="stylesheet">
+	<link href="{{ asset('backend-assets/css/icons.css') }}" rel="stylesheet">
 	<!-- Theme Style CSS -->
-	<link rel="stylesheet" href="{{ asset('build/assets/backend-assets/css/dark-theme.css') }}" />
-	<link rel="stylesheet" href="{{ asset('build/assets/backend-assets/css/semi-dark.css') }}" />
-	<link rel="stylesheet" href="{{ asset('build/assets/backend-assets/css/header-colors.css') }}" />
+	<link rel="stylesheet" href="{{ asset('backend-assets/css/dark-theme.css') }}" />
+	<link rel="stylesheet" href="{{ asset('backend-assets/css/semi-dark.css') }}" />
+	<link rel="stylesheet" href="{{ asset('backend-assets/css/header-colors.css') }}" />
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<title>BUMDes Guna Artha</title>
@@ -57,42 +57,42 @@
 	</div>
 	<!--end wrapper-->
 	<!-- Bootstrap JS -->
-	<script src="{{ asset('build/assets/backend-assets/js/bootstrap.bundle.min.js') }}"></script>
+	<script src="{{ asset('backend-assets/js/bootstrap.bundle.min.js') }}"></script>
 	<!--plugins-->
-	<script src="{{ asset('build/assets/backend-assets/js/jquery.min.js') }}"></script>
-	<script src="{{ asset('build/assets/backend-assets/plugins/simplebar/js/simplebar.min.js') }}"></script>
-	<script src="{{ asset('build/assets/backend-assets/plugins/metismenu/js/metisMenu.min.js') }}"></script>
-	<script src="{{ asset('build/assets/backend-assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js') }}"></script>
-	<script src="{{ asset('build/assets/backend-assets/plugins/chartjs/js/Chart.min.js') }}"></script>
-	<script src="{{ asset('build/assets/backend-assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js') }}"></script>
-    <script src="{{ asset('build/assets/backend-assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
-	<script src="{{ asset('build/assets/backend-assets/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js') }}"></script>
-	<script src="{{ asset('build/assets/backend-assets/plugins/sparkline-charts/jquery.sparkline.min.js') }}"></script>
-	<script src="{{ asset('build/assets/backend-assets/plugins/jquery-knob/excanvas.js') }}"></script>
-	<script src="{{ asset('build/assets/backend-assets/plugins/jquery-knob/jquery.knob.js') }}"></script>
-	<script src="{{ asset('build/assets/backend-assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
-	<script src="{{ asset('build/assets/backend-assets/plugins/datatable/js/dataTables.bootstrap5.min.js') }}"></script>
+	<script src="{{ asset('backend-assets/js/jquery.min.js') }}"></script>
+	<script src="{{ asset('backend-assets/plugins/simplebar/js/simplebar.min.js') }}"></script>
+	<script src="{{ asset('backend-assets/plugins/metismenu/js/metisMenu.min.js') }}"></script>
+	<script src="{{ asset('backend-assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js') }}"></script>
+	<script src="{{ asset('backend-assets/plugins/chartjs/js/Chart.min.js') }}"></script>
+	<script src="{{ asset('backend-assets/plugins/vectormap/jquery-jvectormap-2.0.2.min.js') }}"></script>
+    <script src="{{ asset('backend-assets/plugins/vectormap/jquery-jvectormap-world-mill-en.js') }}"></script>
+	<script src="{{ asset('backend-assets/plugins/jquery.easy-pie-chart/jquery.easypiechart.min.js') }}"></script>
+	<script src="{{ asset('backend-assets/plugins/sparkline-charts/jquery.sparkline.min.js') }}"></script>
+	<script src="{{ asset('backend-assets/plugins/jquery-knob/excanvas.js') }}"></script>
+	<script src="{{ asset('backend-assets/plugins/jquery-knob/jquery.knob.js') }}"></script>
+	<script src="{{ asset('backend-assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
+	<script src="{{ asset('backend-assets/plugins/datatable/js/dataTables.bootstrap5.min.js') }}"></script>
 	  <script>
 		  $(function() {
 			  $(".knob").knob();
 		  });
 	  </script>
-	  <script src="{{ asset('build/assets/backend-assets/js/index.js') }}"></script>
+	  <script src="{{ asset('backend-assets/js/index.js') }}"></script>
 
     <!-- highcharts js -->
-	<script src="{{ asset('build/assets/backend-assets/plugins/highcharts/js/highcharts.js') }}"></script>
-	<script src="{{ asset('build/assets/backend-assets/plugins/highcharts/js/highcharts-more.js') }}"></script>
-	<script src="{{ asset('build/assets/backend-assets/plugins/highcharts/js/variable-pie.js') }}"></script>
-	<script src="{{ asset('build/assets/backend-assets/plugins/highcharts/js/solid-gauge.js') }}"></script>
-	<script src="{{ asset('build/assets/backend-assets/plugins/highcharts/js/highcharts-3d.js') }}"></script>
-	<script src="{{ asset('build/assets/backend-assets/plugins/highcharts/js/cylinder.js') }}"></script>
-	<script src="{{ asset('build/assets/backend-assets/plugins/highcharts/js/funnel3d.js') }}"></script>
-	<script src="{{ asset('build/assets/backend-assets/plugins/highcharts/js/exporting.js') }}"></script>
-	<script src="{{ asset('build/assets/backend-assets/plugins/highcharts/js/export-data.js') }}"></script>
-	<script src="{{ asset('build/assets/backend-assets/plugins/highcharts/js/accessibility.js') }}"></script>
-	<script src="{{ asset('build/assets/backend-assets/plugins/highcharts/js/highcharts-custom.script.js') }}"></script>
+	<script src="{{ asset('backend-assets/plugins/highcharts/js/highcharts.js') }}"></script>
+	<script src="{{ asset('backend-assets/plugins/highcharts/js/highcharts-more.js') }}"></script>
+	<script src="{{ asset('backend-assets/plugins/highcharts/js/variable-pie.js') }}"></script>
+	<script src="{{ asset('backend-assets/plugins/highcharts/js/solid-gauge.js') }}"></script>
+	<script src="{{ asset('backend-assets/plugins/highcharts/js/highcharts-3d.js') }}"></script>
+	<script src="{{ asset('backend-assets/plugins/highcharts/js/cylinder.js') }}"></script>
+	<script src="{{ asset('backend-assets/plugins/highcharts/js/funnel3d.js') }}"></script>
+	<script src="{{ asset('backend-assets/plugins/highcharts/js/exporting.js') }}"></script>
+	<script src="{{ asset('backend-assets/plugins/highcharts/js/export-data.js') }}"></script>
+	<script src="{{ asset('backend-assets/plugins/highcharts/js/accessibility.js') }}"></script>
+	<script src="{{ asset('backend-assets/plugins/highcharts/js/highcharts-custom.script.js') }}"></script>
 	<!--app JS-->
-	<script src="{{ asset('build/assets/backend-assets/js/app.js') }}"></script>
+	<script src="{{ asset('backend-assets/js/app.js') }}"></script>
 
     @yield('backend-script')
 </body>

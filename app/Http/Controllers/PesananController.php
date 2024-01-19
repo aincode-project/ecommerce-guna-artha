@@ -19,9 +19,13 @@ class PesananController extends Controller
     public function index()
     {
         if (Auth::user()->hak_akses == "Kepala BUMDes") {
-            $dataPesanans = Pesanan::all();
+            $dataPesanans = Pesanan::orderByRaw("FIELD(status_pesanan, 'Dipesan', 'Diproses', 'Dikirim', 'Dikonfirmasi', 'Cancel')")->get();
         } else {
-            $dataPesanans = Pesanan::where('pegawai_id', Auth::user()->pegawai->id)->orWhere('status_pesanan', 'Dipesan')->get();
+            $dataPesanans = Pesanan::where('pegawai_id', Auth::user()->pegawai->id)
+                ->orWhere('status_pesanan', 'Dipesan')
+                ->orWhere('status_pesanan', 'Cancel')
+                ->orderByRaw("FIELD(status_pesanan, 'Dipesan', 'Diproses', 'Dikirim', 'Cancel')")
+                ->get();
         }
 
         return view('backend.pesanan.index', compact('dataPesanans'));
@@ -91,6 +95,16 @@ class PesananController extends Controller
     public function destroy(Pesanan $pesanan)
     {
         //
+    }
+
+    public function prosesPesanan($id)
+    {
+        Pesanan::where('id', $id)->update([
+            'pegawai_id' => Auth::user()->pegawai->id,
+            'status_pesanan' => "Diproses",
+        ]);
+
+        return redirect()->route('pesanan.show', $id);
     }
 
     public function kirimPesanan($id)

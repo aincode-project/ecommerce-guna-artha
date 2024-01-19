@@ -50,6 +50,7 @@ class StockOpnameController extends Controller
             DetailStockOpname::create([
                 'stock_opname_id' => $dataStockOpname->id,
                 'barang_id' => $value->id,
+                'stok_sistem' => $value->total_stok,
             ]);
         }
 
@@ -107,21 +108,24 @@ class StockOpnameController extends Controller
 
     public function updateStockBarang(Request $request, $id)
     {
+        $detailStockOpnameTest = DetailStockOpname::where('id', $id)->first();
+
         $selisih = $request->stok_sistem - $request->stok_fisik;
         if ($selisih < 0) {
             $selisih = $selisih * -1;
         }
         DetailStockOpname::where('id', $id)->update([
-            'stok_sistem' => $request->stok_sistem,
             'stok_fisik' => $request->stok_fisik,
             'selisih' => $selisih,
         ]);
         $detailStockOpname = DetailStockOpname::where('id', $id)->first();
         $dataStockOpname = StockOpname::where('id', $detailStockOpname->stock_opname_id)->first();
-        if ($selisih != 0) {
-            StockOpname::where('id', $detailStockOpname->stock_opname_id)->update([
-                'barang_selisih' => $dataStockOpname->barang_selisih + 1,
-            ]);
+        if ($detailStockOpnameTest->stok_fisik == 0) {
+            if ($selisih != 0) {
+                StockOpname::where('id', $detailStockOpname->stock_opname_id)->update([
+                    'barang_selisih' => $dataStockOpname->barang_selisih + 1,
+                ]);
+            }
         }
 
         return redirect()->back();

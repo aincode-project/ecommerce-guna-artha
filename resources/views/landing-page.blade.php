@@ -1,6 +1,55 @@
 @extends('frontend-layout.admin')
 
 @section('frontend-content')
+<!--============================
+    BANNER PART 2 START
+==============================-->
+<section id="wsus__banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="wsus__banner_content">
+                    <div class="row banner_slider">
+                        <div class="col-xl-12">
+                            <div class="wsus__single_slider" style="background: url('https://www.indomie.co.id/Content/images/02112021_banner.jpg');">
+                                <div class="wsus__single_slider_text">
+                                    <h5 style="opacity: 0">new arrivals</h5>
+                                    <h1 style="opacity: 0">men's fashion</h1>
+                                    <h6 style="opacity: 0">start at $99.00</h6>
+                                    <a style="opacity: 0; pointer-events: none" class="common_btn" href="#">shop now</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="wsus__single_slider" style="background: url('https://assets.klikindomaret.com///products/promopage/BIG-BANNER-AQUA-OS_1.jpg');">
+                                <div class="wsus__single_slider_text">
+                                    <h5 style="opacity: 0">new arrivals</h5>
+                                    <h1 style="opacity: 0">kid's fashion</h1>
+                                    <h6 style="opacity: 0">start at $49.00</h6>
+                                    <a style="opacity: 0; pointer-events: none" class="common_btn" href="#">shop now</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+                            <div class="wsus__single_slider" style="background: url('https://id-test-11.slatic.net/shop/9d87b23b60cbbd4ae369cf9cf199e65b.png');">
+                                <div class="wsus__single_slider_text">
+                                    <h5 style="opacity: 0">new arrivals</h5>
+                                    <h1 style="opacity: 0">winter collection</h1>
+                                    <h6 style="opacity: 0">start at $99</h6>
+                                    <a style="opacity: 0; pointer-events: none" class="common_btn" href="#">shop now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--============================
+    BANNER PART 2 END
+==============================-->
+
 <section id="wsus__product_page">
     <div class="container">
         <div class="row">

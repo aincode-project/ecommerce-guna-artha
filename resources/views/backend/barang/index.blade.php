@@ -53,7 +53,7 @@
                         <td>{{ $dataBarang->kategori_barang->nama_kategori }}</td>
                         <td>
                             <div class="row text-end">
-                                <div class="col-md-8">
+                                <div class="col-md-5">
                                     {{ $dataBarang->total_stok }}
                                 </div>
                                 @if (auth()->check() && auth()->user()->hak_akses == "Admin")

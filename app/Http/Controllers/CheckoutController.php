@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Barang;
 use App\Models\Pesanan;
 use App\Models\Keranjang;
-use Illuminate\Http\Request;
-use App\Models\AlamatCustomer;
-use App\Models\Barang;
-use App\Models\DetailPesanan;
-use App\Models\KategoriBarang;
 use App\Models\StokBarang;
+use App\Traits\WablasTrait;
+use Illuminate\Http\Request;
+use App\Models\DetailPesanan;
+use App\Models\AlamatCustomer;
+use App\Models\KategoriBarang;
 use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
@@ -69,6 +70,15 @@ class CheckoutController extends Controller
         }
 
         Keranjang::where('customer_id', Auth::user()->customer->id)->delete();
+
+        $kumpulan_data = [];
+        $data['phone'] = $dataAlamat->no_telp;
+        $data['message'] = "Transaksi anda <br> di E-Commerce Guna Artha telah berhasil!!!";
+        $data['secret'] = false;
+        $data['retry'] = false;
+        $data['isGroup'] = false;
+        array_push($kumpulan_data, $data);
+        WablasTrait::sendText($kumpulan_data);
 
         return redirect()->route('dashboard-customer.index');
     }

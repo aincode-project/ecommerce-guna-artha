@@ -52,7 +52,7 @@
                     <tr>
                         <td class="text-center"><img src="{{ asset('storage/'.$detailStockOpname->barang->foto_barang) }}" alt="bag" class="img-fluid" style="width: 100px"></td>
                         <td>{{ $detailStockOpname->barang->nama_barang }}</td>
-                        <td class="text-end">{{ $detailStockOpname->barang->total_stok }}</td>
+                        <td class="text-end">{{ $detailStockOpname->stok_sistem }}</td>
                         <td class="text-end">{{ $detailStockOpname->stok_fisik }}</td>
                         <td class="text-end">{{ $detailStockOpname->selisih }}</td>
                         {{-- <td>{{ $detailStockOpname->keterangan }}</td> --}}
@@ -72,7 +72,7 @@
                                             <div class="modal-body">
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <input type="hidden" name="stok_sistem" value="{{ $detailStockOpname->barang->total_stok }}">
+                                                        <input type="hidden" name="stok_sistem" value="{{ $detailStockOpname->stok_sistem }}">
                                                         <input class="form-control" type="text" id="nama_barang" name="nama_barang" value="{{ $detailStockOpname->barang->nama_barang }}" disabled>
 
                                                         @error('nama_barang')

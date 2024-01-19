@@ -20,6 +20,13 @@
                                     <button class="btn btn-sm btn-outline-success">Konfirmasi Penerimaan</button>
                                 </form>
                             @endif
+                            @if ($pesanan->status_pesanan == "Dipesan")
+                                <form action="{{ route('transaksi-customer.cancelPesanan', $pesanan->id) }}" method="POST" id="formPembatalan">
+                                    @method('put')
+                                    @csrf
+                                    <button class="btn btn-sm btn-outline-danger" onclick="konfirmasiPembatalan()"><i class="fal fa-trash-alt"></i> Cancel</button>
+                                </form>
+                            @endif
                         </div>
                     </div>
                     <div class="col-xl-6 col-md-6">
@@ -55,6 +62,11 @@
                             <th class="total">
                                 subtotal
                             </th>
+                            @if ($pesanan->status_pesanan == "Dipesan")
+                            <th class="total">
+
+                            </th>
+                            @endif
                         </tr>
                         @foreach ($pesanan->detail_pesanan as $detail_pesanan)
                         <tr>
@@ -72,10 +84,45 @@
 
                             <td class="quentity">
                                 {{ $detail_pesanan->jumlah }}
+                                @if ($pesanan->status_pesanan == "Dipesan")
+                                <a href="" data-bs-toggle="modal" data-bs-target="#jumlahUpdate{{$detail_pesanan->id}}"><i class="fal fa-edit" style="color: orange; margin-left: 10px"></i></a>
+                                <!-- Modal -->
+                                <div class="modal fade" id="jumlahUpdate{{$detail_pesanan->id}}" tabindex="-1" aria-labelledby="exampleModalLabel{{$detail_pesanan->id}}" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel{{$detail_pesanan->id}}">Ubah Jumlah</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <form action="{{ route('transaksi-customer.ubahJumlah', $detail_pesanan->id) }}" method="POST">
+                                                @method('put')
+                                                @csrf
+                                                <div class="modal-body text-start">
+                                                    {{ $detail_pesanan->barang->nama_barang }}
+                                                    <input type="number" class="form-control" min="1" max="{{ $detail_pesanan->barang->total_stok }}" name="jumlah" id="jumlah" value="{{ $detail_pesanan->jumlah }}">
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                                    <button type="submit" class="btn btn-primary">Ubah</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
                             </td>
                             <td class="total">
                                 @currency($detail_pesanan->jumlah * $detail_pesanan->harga_barang)
                             </td>
+                            @if ($pesanan->status_pesanan == "Dipesan")
+                            <td class="total">
+                                <form action="{{ route('transaksi-customer.hapusPesanan', $detail_pesanan->id) }}" method="POST">
+                                    @method('delete')
+                                    @csrf
+                                    <button type="submit" class="btn btn-link"><i class="fal fa-trash-alt" style="color: red"></i></button>
+                                </form>
+                            </td>
+                            @endif
                         </tr>
                         @endforeach
                     </table>
@@ -93,6 +140,23 @@
 <script>
     $(document).ready(function() {
         $('#barang-table').DataTable();
-        } );
+    } );
+
+    function konfirmasiPembatalan() {
+        // Munculkan alert konfirmasi
+        var konfirmasi = confirm("Apakah Anda yakin ingin membatalkan pesanan ini?");
+
+        // Cek hasil konfirmasi
+        if (konfirmasi) {
+            // Jika user menekan "OK", lakukan proses pemesanan
+            var form = document.getElementById("formPembatalan");
+            // Lakukan sesuatu dengan data formulir, misalnya kirim ke server
+            alert("Proses pembatalan berhasil dilakukan!");
+            form.submit(); // Ini hanya contoh, sesuaikan dengan kebutuhan Anda
+            } else {
+                // Jika user menekan "Batal", berikan feedback atau lakukan sesuatu
+                alert("Pembatalan dibatalkan.");
+            }
+    }
 </script>
 @endsection

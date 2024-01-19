@@ -43,12 +43,25 @@
             <a href="javascript:;" class="has-arrow">
                 <div class="parent-icon"><i class='bx bx-cart'></i>
                 </div>
-                <div class="menu-title">Transaksi</div>
+                <div class="menu-title">Transaksi Website</div>
             </a>
             <ul>
                 <li> <a href="{{ route('pesanan.index') }}"><i class="bx bx-right-arrow-alt"></i>Pemesanan</a>
                 </li>
-                <li> <a href="{{ route('penjualan.index') }}"><i class="bx bx-right-arrow-alt"></i>Penjualan</a>
+                <li> <a href="{{ route('penjualan.index') }}"><i class="bx bx-right-arrow-alt"></i>Penjualan Website</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a href="javascript:;" class="has-arrow">
+                <div class="parent-icon"><i class='bx bx-cart'></i>
+                </div>
+                <div class="menu-title">Transaksi Toko</div>
+            </a>
+            <ul>
+                <li> <a href="{{ route('kasir.index') }}"><i class="bx bx-right-arrow-alt"></i>Kasir</a>
+                </li>
+                <li> <a href="{{ route('penjualan-toko.index') }}"><i class="bx bx-right-arrow-alt"></i>Penjualan Toko</a>
                 </li>
             </ul>
         </li>

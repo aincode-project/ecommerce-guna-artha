@@ -22,7 +22,7 @@
                         <td class="text-end">@currency($dataPesanan->total_pesanan)</td>
                         <td>{{ $dataPesanan->status_pesanan }}</td>
                         <td class="text-center"><a class="btn btn-outline-primary btn-sm" href="{{ route('transaksi.show', $dataPesanan) }}">view</a></td>
-                      </tr>
+                    </tr>
                     @endforeach
                   </tbody>
                 </table>

@@ -35,4 +35,8 @@ class Pegawai extends Model
     public function stock_opname(){
     	return $this->hasMany('App\Models\StockOpname');
     }
+
+    public function penjualan_toko(){
+    	return $this->hasMany('App\Models\PenjualanToko');
+    }
 }

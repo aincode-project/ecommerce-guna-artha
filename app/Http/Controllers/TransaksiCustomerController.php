@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Barang;
 use App\Models\Pesanan;
 use App\Models\Penjualan;
 use Illuminate\Http\Request;
 use App\Models\DetailPesanan;
 use App\Models\DetailPenjualan;
+use Illuminate\Support\Facades\Auth;
 
 class TransaksiCustomerController extends Controller
 {
@@ -17,7 +19,9 @@ class TransaksiCustomerController extends Controller
      */
     public function index()
     {
-        $dataPesanans = Pesanan::all();
+        $dataPesanans = Pesanan::where('customer_id', Auth::user()->customer->id)
+            ->orderByRaw("FIELD(status_pesanan, 'Dipesan', 'Diproses', 'Dikirim', 'Dikonfirmasi', 'Cancel')")
+            ->get();
 
         return view('frontend.transaksi.index', compact('dataPesanans'));
     }
@@ -120,5 +124,79 @@ class TransaksiCustomerController extends Controller
     public function destroy(Pesanan $pesanan)
     {
         //
+    }
+
+    public function ubahJumlah(Request $request, $id)
+    {
+        $detailTransaksi = DetailPesanan::where('id', $id)->first();
+        $dataTransaksi = Pesanan::where('id', $detailTransaksi->pesanan_id)->first();
+        $dataBarang = Barang::where('id', $detailTransaksi->barang_id)->first();
+
+        DetailPesanan::where('id', $id)->update([
+            'jumlah' => $request->jumlah,
+        ]);
+
+        Barang::where('id', $detailTransaksi->barang_id)->update([
+            'total_stok' => ($dataBarang->total_stok + $detailTransaksi->jumlah) - $request->jumlah,
+            'jumlah_terjual' => ($dataBarang->jumlah_terjual - $detailTransaksi->jumlah) + $request->jumlah
+        ]);
+
+        $newDetailTransaksi = DetailPesanan::where('pesanan_id', $detailTransaksi->pesanan_id)->get();
+        $total_pesanan = 0;
+        foreach ($newDetailTransaksi as $key => $value) {
+            $total_pesanan = $total_pesanan + ($value->jumlah * $value->harga_barang);
+        }
+
+        Pesanan::where('id', $detailTransaksi->pesanan_id)->update([
+            'total_pesanan' => $total_pesanan,
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function hapusPesanan($id)
+    {
+        $detailTransaksi = DetailPesanan::where('id', $id)->first();
+        $dataBarang = Barang::where('id', $detailTransaksi->barang_id)->first();
+
+        Barang::where('id', $detailTransaksi->barang_id)->update([
+            'total_stok' => $dataBarang->total_stok + $detailTransaksi->jumlah,
+            'jumlah_terjual' => $dataBarang->jumlah_terjual - $detailTransaksi->jumlah
+        ]);
+
+        DetailPesanan::where('id', $id)->delete();
+
+        $newDetailTransaksi = DetailPesanan::where('pesanan_id', $detailTransaksi->pesanan_id)->get();
+        $total_pesanan = 0;
+        foreach ($newDetailTransaksi as $key => $value) {
+            $total_pesanan = $total_pesanan + ($value->jumlah * $value->harga_barang);
+        }
+
+        Pesanan::where('id', $detailTransaksi->pesanan_id)->update([
+            'total_pesanan' => $total_pesanan,
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function cancelPesanan($id)
+    {
+        $dataPesanan = Pesanan::where('id', $id)->first();
+
+        Pesanan::where('id', $id)->update([
+            'status_pesanan' => 'Cancel',
+        ]);
+
+        $detailPesanan = DetailPesanan::where('pesanan_id', $id)->get();
+        foreach ($detailPesanan as $key => $value) {
+            $dataBarang = Barang::where('id', $value->barang_id)->first();
+
+            Barang::where('id', $value->barang_id)->update([
+                'total_stok' => $dataBarang->total_stok + $value->jumlah,
+                'jumlah_terjual' => $dataBarang->jumlah_terjual - $value->jumlah
+            ]);
+        }
+
+        return redirect()->back();
     }
 }

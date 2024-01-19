@@ -55,4 +55,8 @@ class Barang extends Model
     public function detail_stock_opname(){
     	return $this->hasMany('App\Models\DetailStockOpname');
     }
+
+    public function detail_penjulan_toko(){
+    	return $this->hasMany('App\Models\DetailPenjualanToko');
+    }
 }

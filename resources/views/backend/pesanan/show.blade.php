@@ -40,6 +40,12 @@
                     <p>Status: {{ $pesanan->status_pesanan }}</p>
                     @if (auth()->check() && auth()->user()->hak_akses == "Admin")
                         @if ($pesanan->status_pesanan == "Dipesan")
+                            <form action="{{ route('pesanan.proses', $pesanan->id) }}" method="POST">
+                                @method('PUT')
+                                @csrf
+                                <button class="btn btn-sm btn-outline-warning"><i class='bx bx-xs bx-paper-plane'></i> Proses Pesanan</button>
+                            </form>
+                        @elseif ($pesanan->status_pesanan == "Diproses")
                             <form action="{{ route('pesanan.kirim', $pesanan->id) }}" method="POST">
                                 @method('PUT')
                                 @csrf

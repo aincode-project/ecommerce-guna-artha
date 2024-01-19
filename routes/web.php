@@ -14,10 +14,12 @@ use App\Http\Controllers\HomeUserController;
 use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\KategoriBarangController;
 use App\Http\Controllers\DashboardCustomerController;
+use App\Http\Controllers\DummyPenjualanTokoController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LaporanPenjualanController;
 use App\Http\Controllers\LaporanStockOpnameController;
 use App\Http\Controllers\PenjualanController;
+use App\Http\Controllers\PenjualanTokoController;
 use App\Http\Controllers\PesananController;
 use App\Http\Controllers\ProfilCustomerController;
 use App\Http\Controllers\StockOpnameController;
@@ -60,10 +62,14 @@ Route::middleware('auth')->group(function () {
         Route::post('/checkout/add-new-address', [CheckoutController::class, 'addNewAddress'])->name('checkout.addNewAddress');
 
         Route::resource('dashboard-customer/transaksi', TransaksiCustomerController::class);
+        Route::put('/dashboard-customer/transaksi/{id}/ubahJumlah', [TransaksiCustomerController::class, 'ubahJumlah'])->name('transaksi-customer.ubahJumlah');
+        Route::delete('/dashboard-customer/transaksi/{id}/hapusPesanan', [TransaksiCustomerController::class, 'hapusPesanan'])->name('transaksi-customer.hapusPesanan');
+        Route::put('/dashboard-customer/transaksi/{id}/cancelPesanan', [TransaksiCustomerController::class, 'cancelPesanan'])->name('transaksi-customer.cancelPesanan');
     });
 
     Route::middleware(['is_admin_kepala'])->group(function () {
         Route::get('/get-monthly-sales-data', [HomeController::class, 'getMonthlySalesData']);
+        Route::get('/get-monthly-sales-data-toko', [HomeController::class, 'getMonthlySalesDataToko']);
 
         Route::resource('/customer', CustomerController::class);
 
@@ -88,10 +94,14 @@ Route::middleware('auth')->group(function () {
         Route::post('/laporanPenjualan/detail/{id}', [LaporanPenjualanController::class, 'detail'])->name('laporanPenjualan.detail');
 
         Route::get('/laporanStockOpname', [LaporanStockOpnameController::class, 'index'])->name('laporanStockOpname.index');
+
+        Route::get('/penjualan-toko', [PenjualanTokoController::class, 'index'])->name('penjualan-toko.index');
+        Route::get('/penjualan-toko/{id}', [PenjualanTokoController::class, 'show'])->name('penjualan-toko.show');
     });
 
     Route::middleware(['is_admin'])->group(function () {
         Route::put('/pesanan/kirim/{id}', [PesananController::class, 'kirimPesanan'])->name('pesanan.kirim');
+        Route::put('/pesanan/proses/{id}', [PesananController::class, 'prosesPesanan'])->name('pesanan.proses');
         Route::put('/pesanan/konfirmasi/{id}', [PesananController::class, 'konfirmasiPesanan'])->name('pesanan.konfirmasi');
 
         Route::post('/barang', [BarangController::class, 'store'])->name('barang.store');
@@ -108,6 +118,10 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('/stock-opname', StockOpnameController::class)->except(['index', 'show']);
         Route::put('/stock-opname/updateStock/{id}', [StockOpnameController::class, 'updateStockBarang'])->name('stock-opname.updateStock');
+
+        Route::resource('/kasir', DummyPenjualanTokoController::class);
+        Route::delete('/kasir', [DummyPenjualanTokoController::class, 'destroyAll'])->name('kasir.deleteAll');
+        Route::post('/kasir/proses-transaksi', [DummyPenjualanTokoController::class, 'prosesTransaksi'])->name('kasir.prosesTransaksi');
     });
 
     Route::middleware(['is_kepala'])->group(function () {

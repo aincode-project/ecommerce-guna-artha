@@ -26,8 +26,13 @@
 	<link rel="stylesheet" href="{{ asset('backend-assets/css/semi-dark.css') }}" />
 	<link rel="stylesheet" href="{{ asset('backend-assets/css/header-colors.css') }}" />
 
+    <link href="{{ asset('backend-assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet" />
+	<link href="{{ asset('backend-assets/plugins/select2/css/select2-bootstrap4.css') }}" rel="stylesheet" />
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<title>BUMDes Guna Artha</title>
+
+    @yield('backend-head')
 </head>
 
 <body>
@@ -91,6 +96,13 @@
 	<script src="{{ asset('backend-assets/plugins/highcharts/js/export-data.js') }}"></script>
 	<script src="{{ asset('backend-assets/plugins/highcharts/js/accessibility.js') }}"></script>
 	<script src="{{ asset('backend-assets/plugins/highcharts/js/highcharts-custom.script.js') }}"></script>
+
+    <script src="{{ asset('backend-assets/plugins/select2/js/select2.min.js') }}"></script>
+
+    <!--notification js -->
+	<script src="{{ asset('backend-assets/plugins/notifications/js/lobibox.min.js') }}"></script>
+	<script src="{{ asset('backend-assets/plugins/notifications/js/notifications.min.js') }}"></script>
+	<script src="{{ asset('backend-assets/plugins/notifications/js/notification-custom-script.js') }}"></script>
 	<!--app JS-->
 	<script src="{{ asset('backend-assets/js/app.js') }}"></script>
 

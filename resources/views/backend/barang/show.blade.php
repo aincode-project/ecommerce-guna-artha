@@ -72,7 +72,7 @@
                 <tbody>
                     @foreach ($stokBarangs as $stokBarang)
                     <tr>
-                        <td>{{ Carbon\Carbon::parse($stokBarang->tanggal_catat)->format('d F Y') }}</td>
+                        <td>{{ Carbon\Carbon::parse($stokBarang->created_at)->format('d F Y H:i:s') }}</td>
                         <td>{{ $stokBarang->jumlah_stok }}</td>
                         @if ($stokBarang->keterangan == "Tambah Stok")
                         <td style="color: rgb(8, 151, 0)">{{ $stokBarang->keterangan }}</td>

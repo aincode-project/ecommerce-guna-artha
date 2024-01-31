@@ -1,29 +1,30 @@
 <?php
 
-use App\Http\Controllers\AlamatCustomerController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\BumdesController;
-use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\PesananController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\HomeUserController;
 use App\Http\Controllers\KeranjangController;
-use App\Http\Controllers\KategoriBarangController;
-use App\Http\Controllers\DashboardCustomerController;
-use App\Http\Controllers\DummyPenjualanTokoController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\LaporanPenjualanController;
-use App\Http\Controllers\LaporanStockOpnameController;
 use App\Http\Controllers\PenjualanController;
-use App\Http\Controllers\PenjualanTokoController;
-use App\Http\Controllers\PesananController;
-use App\Http\Controllers\ProfilCustomerController;
 use App\Http\Controllers\StockOpnameController;
+use App\Http\Controllers\PenjualanTokoController;
+use App\Http\Controllers\AlamatCustomerController;
+use App\Http\Controllers\KategoriBarangController;
+use App\Http\Controllers\ProfilCustomerController;
+use App\Http\Controllers\LaporanPenjualanController;
+use App\Http\Controllers\DashboardCustomerController;
 use App\Http\Controllers\TransaksiCustomerController;
+use App\Http\Controllers\DummyPenjualanTokoController;
+use App\Http\Controllers\LaporanStockOpnameController;
+use App\Http\Controllers\LaporanPenjualanTokoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -93,6 +94,10 @@ Route::middleware('auth')->group(function () {
         Route::post('/laporanPenjualan/{id}', [LaporanPenjualanController::class, 'index'])->name('laporanPenjualan.filter');
         Route::post('/laporanPenjualan/detail/{id}', [LaporanPenjualanController::class, 'detail'])->name('laporanPenjualan.detail');
 
+        Route::get('/laporanPenjualanToko/{id}', [LaporanPenjualanTokoController::class, 'index'])->name('laporanPenjualanToko.index');
+        Route::post('/laporanPenjualanToko/{id}', [LaporanPenjualanTokoController::class, 'index'])->name('laporanPenjualanToko.filter');
+        Route::post('/laporanPenjualanToko/detail/{id}', [LaporanPenjualanTokoController::class, 'detail'])->name('laporanPenjualanToko.detail');
+
         Route::get('/laporanStockOpname', [LaporanStockOpnameController::class, 'index'])->name('laporanStockOpname.index');
 
         Route::get('/penjualan-toko', [PenjualanTokoController::class, 'index'])->name('penjualan-toko.index');
@@ -130,6 +135,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('/user', UserController::class);
 
         Route::get('/laporan-penjualan/print', [LaporanPenjualanController::class, 'print'])->name('laporanPenjualan.print');
+        Route::get('/laporan-penjualan-toko/print', [LaporanPenjualanTokoController::class, 'print'])->name('laporanPenjualanToko.print');
         Route::get('/laporan-stock-opname/print', [LaporanStockOpnameController::class, 'print'])->name('laporanStockOpname.print');
     });
 });

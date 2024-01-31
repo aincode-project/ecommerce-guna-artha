@@ -36,7 +36,7 @@
             <div class="col-xl-6 col-md-6 ">
                     <h5>Detail Tranasksi</h5>
                     <h6>Nama: {{ $pesanan->customer->nama_customer }}</h6>
-                    <p class="mb-2">Tanggal: {{ Carbon\Carbon::parse($pesanan->tanggal_pesanan)->format('d F Y') }}</p>
+                    <p class="mb-2">Tanggal: {{ Carbon\Carbon::parse($pesanan->created_at)->format('d F Y H:i:s') }}</p>
                     <p>Status: {{ $pesanan->status_pesanan }}</p>
                     @if (auth()->check() && auth()->user()->hak_akses == "Admin")
                         @if ($pesanan->status_pesanan == "Dipesan")

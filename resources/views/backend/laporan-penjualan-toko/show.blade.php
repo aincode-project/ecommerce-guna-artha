@@ -9,7 +9,8 @@
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="bx bx-home-alt"></i></a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Data Penjualan</li>
+                <li class="breadcrumb-item active" aria-current="page">Laporan Penjualan</li>
+                <li class="breadcrumb-item active" aria-current="page">Detail Laporan Penjualan</li>
             </ol>
         </nav>
     </div>
@@ -31,15 +32,19 @@
 <hr/>
 <div class="card">
     <div class="card-body">
+            <div class="row mb-3">
+                {{-- <div class="text-end col">
+                    <a href="" class="btn btn-success">Print</a>
+                </div> --}}
+            </div>
         <div class="table-responsive">
-            <table id="pesanan-table" class="table table-striped table-bordered" style="width:100%">
+            <table id="detail-laporan-penjualan-table" class="table table-striped table-bordered" style="width:100%">
                 <thead class="text-center" style="background-color: rgb(53, 146, 213); color: white">
                     <tr>
                         <th>Tanggal</th>
                         <th>Nama Customer</th>
                         <th>Alamat</th>
                         <th>Total</th>
-                        <th>Detail</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -49,9 +54,6 @@
                         <td>{{ $dataPenjualan->customer->nama_customer }}</td>
                         <td>{{ $dataPenjualan->alamat }}</td>
                         <td class="text-end">@currency($dataPenjualan->total_penjualan)</td>
-                        <td class="text-center">
-                            <a href="{{ route('penjualan.show', $dataPenjualan->id) }}" class="btn btn-outline-primary btn-sm">Lihat</a>
-                        </td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -64,7 +66,7 @@
 @section('backend-script')
 <script>
     $(document).ready(function() {
-        $('#pesanan-table').DataTable();
+        $('#detail-laporan-penjualan-table').DataTable();
         } );
 </script>
 @endsection

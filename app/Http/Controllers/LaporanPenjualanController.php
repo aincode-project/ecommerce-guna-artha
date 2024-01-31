@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Penjualan;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB as DB;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Illuminate\Support\Facades\DB as DB;
 
 class LaporanPenjualanController extends Controller
 {
@@ -16,33 +17,28 @@ class LaporanPenjualanController extends Controller
      */
     public function index(Request $request, $id)
     {
-        $tahuns = Penjualan::selectRaw('YEAR(tanggal_penjualan) as tahun')
-            ->groupBy('tahun')
-            ->orderBy('tahun')
-            ->get();
-
-        $tahunDipilih = "All";
+        $minDate = Penjualan::min('tanggal_penjualan');
+        $maxDate = Penjualan::max('tanggal_penjualan');
+        $tanggalAwalDipilih = $minDate;
+        $tanggalAkhirDipilih = $maxDate;
 
         if ($id == 0) {
-            $dataPenjualans = Penjualan::selectRaw('YEAR(tanggal_penjualan) as tahun, MONTHNAME(tanggal_penjualan) as bulan, SUM(total_penjualan) as total_penjualan')
-                ->groupBy('tahun', 'bulan')
-                ->orderByDesc('tahun', 'bulan')
+            $dataPenjualans = Penjualan::selectRaw('DATE(tanggal_penjualan) as tanggal, SUM(total_penjualan) as total_penjualan')
+                ->groupBy('tanggal')
+                ->orderBy('tanggal')
                 ->get();
         } else {
-            if ($request->filter_tahun == 'All') {
-                return redirect()->route('laporanPenjualan.index', 0);
-            } else {
-                $dataPenjualans = Penjualan::selectRaw('YEAR(tanggal_penjualan) as tahun, MONTHNAME(tanggal_penjualan) as bulan, SUM(total_penjualan) as total_penjualan')
-                ->whereYear('tanggal_penjualan', $request->filter_tahun)
-                ->groupBy('tahun', 'bulan')
-                ->orderByDesc('tahun', 'bulan')
+                $dataPenjualans = Penjualan::selectRaw('DATE(tanggal_penjualan) as tanggal, SUM(total_penjualan) as total_penjualan')
+                ->whereBetween('tanggal_penjualan', [$request->tanggal_awal_data, $request->tanggal_akhir_data])
+                ->groupBy('tanggal')
+                ->orderBy('tanggal')
                 ->get();
 
-                $tahunDipilih = $request->filter_tahun;
-            }
+                $tanggalAwalDipilih = $request->tanggal_awal_data;
+                $tanggalAkhirDipilih = $request->tanggal_akhir_data;
         }
 
-        return view('backend.laporan-penjualan.index', compact('dataPenjualans', 'tahuns', 'tahunDipilih'));
+        return view('backend.laporan-penjualan.index', compact('dataPenjualans', 'minDate', 'maxDate', 'tanggalAwalDipilih', 'tanggalAkhirDipilih'));
     }
 
     /**
@@ -116,29 +112,26 @@ class LaporanPenjualanController extends Controller
 
     public function detail(Request $request, $id)
     {
-        $tanggal_awal = date_create(date("Y-m-d", strtotime($request->tahun . "-" . $request->bulan . +"-01")));
-        $tanggal_akhir = date_create(date("Y-m-t", strtotime($request->tahun . "-" . $request->bulan . +"-01")));
+        // dd($request->tanggal);
+        // $tanggal_awal = date_create(date("Y-m-d", strtotime($request->tahun . "-" . $request->bulan . +"-01")));
+        // $tanggal_akhir = date_create(date("Y-m-t", strtotime($request->tahun . "-" . $request->bulan . +"-01")));
 
-        $dataPenjualans = Penjualan::whereBetween('tanggal_penjualan', [$tanggal_awal, $tanggal_akhir])->get();
+        $dataPenjualans = Penjualan::where('tanggal_penjualan', $request->tanggal)->get();
 
         return view('backend.laporan-penjualan.show', compact('dataPenjualans'));
     }
 
     public function print(Request $request)
     {
-        if ($request->tahunDipilih == 'All') {
-            $dataPenjualans = Penjualan::all();
-        } else {
-            $dataPenjualans = Penjualan::selectRaw('YEAR(tanggal_penjualan) as tahun, MONTHNAME(tanggal_penjualan) as bulan, SUM(total_penjualan) as total_penjualan')
-            ->whereYear('tanggal_penjualan', $request->tahunDipilih)
-            ->groupBy('tahun', 'bulan')
-            ->orderByDesc('tahun', 'bulan')
+        $dataPenjualans = Penjualan::selectRaw('DATE(tanggal_penjualan) as tanggal, SUM(total_penjualan) as total_penjualan')
+            ->whereBetween('tanggal_penjualan', [$request->tanggalAwal, $request->tanggalAkhir])
+            ->groupBy('tanggal')
+            ->orderBy('tanggal')
             ->get();
-        }
 
         // $pdf = PDF::make();
         $pdf = PDF::loadView('backend.laporan-penjualan.print', compact('dataPenjualans'));
 
-        return $pdf->stream('laporan-penjualan_' . $request->tahunDipilih . '.pdf');
+        return $pdf->stream('laporan-penjualan-website_' . Carbon::parse($request->tanggalAwal)->format('d F Y') . ' - ' . Carbon::parse($request->tanggalAkhir)->format('d F Y') . '.pdf');
     }
 }

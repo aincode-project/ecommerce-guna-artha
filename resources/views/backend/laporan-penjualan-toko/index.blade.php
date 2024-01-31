@@ -9,7 +9,7 @@
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="bx bx-home-alt"></i></a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Laporan Penjualan Website</li>
+                <li class="breadcrumb-item active" aria-current="page">Laporan Penjualan Toko</li>
             </ol>
         </nav>
     </div>
@@ -31,7 +31,7 @@
 <hr/>
 <div class="card">
     <div class="card-body">
-        <form action="{{ route('laporanPenjualan.index', 1) }}" method="post">
+        <form action="{{ route('laporanPenjualanToko.index', 1) }}" method="post">
             @csrf
             <div class="row mb-3">
                 <div class="col-md-9 d-flex">
@@ -42,7 +42,7 @@
                 </div>
             </form>
                 <div class="text-end col-md-3">
-                    <form action="{{ route('laporanPenjualan.print') }}">
+                    <form action="{{ route('laporanPenjualanToko.print') }}">
                         <input type="hidden" name="tanggalAwal" value="{{ $tanggalAwalDipilih }}">
                         <input type="hidden" name="tanggalAkhir" value="{{ $tanggalAkhirDipilih }}">
                         @if ($dataPenjualans->count() != 0)

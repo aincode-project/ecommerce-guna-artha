@@ -72,12 +72,21 @@ class CheckoutController extends Controller
         Keranjang::where('customer_id', Auth::user()->customer->id)->delete();
 
         $kumpulan_data = [];
+
         $data['phone'] = $dataAlamat->no_telp;
-        $data['message'] = "Transaksi anda <br> di E-Commerce Guna Artha telah berhasil!!!";
+        $data['message'] = "Pesanan anda telah berhasil dibuat. Mohon ditunggu untuk proses pengiriman.";
         $data['secret'] = false;
         $data['retry'] = false;
         $data['isGroup'] = false;
         array_push($kumpulan_data, $data);
+
+        $data['phone'] = $dataPesanan->customer->no_telp;
+        $data['message'] = "Pesanan anda telah berhasil dibuat. Mohon ditunggu untuk proses pengiriman.";
+        $data['secret'] = false;
+        $data['retry'] = false;
+        $data['isGroup'] = false;
+        array_push($kumpulan_data, $data);
+
         WablasTrait::sendText($kumpulan_data);
 
         return redirect()->route('dashboard-customer.index');

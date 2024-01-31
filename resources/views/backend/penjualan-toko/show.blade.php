@@ -36,7 +36,7 @@
             <div class="col-xl-6 col-md-6 ">
                     <h5>Detail Tranasksi</h5>
                     <h6>Nama Pegawai: {{ $penjualan->pegawai->nama_pegawai }}</h6>
-                    <p class="mb-2">Tanggal: {{ Carbon\Carbon::parse($penjualan->created_at)->format('d F Y') }}</p>
+                    <p class="mb-2">Tanggal: {{ Carbon\Carbon::parse($penjualan->created_at)->format('d F Y H:i:s') }}</p>
             </div>
         </div>
         <hr>

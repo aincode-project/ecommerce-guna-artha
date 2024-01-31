@@ -6,10 +6,10 @@ use App\Models\Barang;
 use App\Models\Pesanan;
 use App\Models\Customer;
 use App\Models\Penjualan;
-use App\Models\PenjualanToko;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB as DB;
+use App\Models\PenjualanToko;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB as DB;
 
 class HomeController extends Controller
 {
@@ -35,14 +35,16 @@ class HomeController extends Controller
         } else {
             $totalBarang = Barang::all()->count();
             $totalCustomer = Customer::all()->count();
-            $jumlahTransaksi = Pesanan::all()->count() + PenjualanToko::all()->count();
-            $totalPenjualan = Penjualan::all()->sum('total_penjualan') + PenjualanToko::all()->sum('total_penjualan');
+            $jumlahTransaksiToko = PenjualanToko::all()->count();
+            $totalPenjualanToko = PenjualanToko::all()->sum('total_penjualan');
+            $jumlahTransaksiWebsite = Pesanan::all()->count();
+            $totalPenjualanWebsite = Penjualan::all()->sum('total_penjualan');
             $totalBarangTerjual = Barang::all()->sum('jumlah_terjual');
             $totalDipesan = Pesanan::where('status_pesanan', 'Dipesan')->count();
             $totalDiproses = Pesanan::where('status_pesanan', 'Diproses')->count();
             $totalDikirim = Pesanan::where('status_pesanan', 'Dikirim')->count();
             $totalCancel = Pesanan::where('status_pesanan', 'Cancel')->count();
-            $totalDikonfirmasi = Pesanan::where('status_pesanan', 'Dikonfirmasi')->count() + PenjualanToko::all()->count();
+            $totalDikonfirmasi = Pesanan::where('status_pesanan', 'Dikonfirmasi')->count();
 
             // $total_penjualan = Penjualan::select(DB::raw("CAST(SUM(total_penjualan) as int) as total_penjualan"))
             //     ->GroupBy(DB::raw("Month(tanggal_penjualan)"))
@@ -72,7 +74,7 @@ class HomeController extends Controller
                 ->take(10)
                 ->pluck('nama_barang');
 
-            return view('home', compact('totalBarang', 'totalCustomer', 'jumlahTransaksi', 'totalPenjualan', 'nama_barang', 'jumlah_terjual', 'tahunWebsite', 'tahunToko', 'totalBarangTerjual', 'totalDipesan', 'totalDiproses', 'totalDikirim', 'totalCancel', 'totalDikonfirmasi'));
+            return view('home', compact('totalBarang', 'totalCustomer', 'jumlahTransaksiToko', 'totalPenjualanToko', 'jumlahTransaksiWebsite', 'totalPenjualanWebsite', 'nama_barang', 'jumlah_terjual', 'tahunWebsite', 'tahunToko', 'totalBarangTerjual', 'totalDipesan', 'totalDiproses', 'totalDikirim', 'totalCancel', 'totalDikonfirmasi'));
         }
 
     }

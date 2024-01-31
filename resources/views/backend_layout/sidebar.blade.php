@@ -79,7 +79,9 @@
             <ul>
                 <li> <a href="{{ route('laporanStockOpname.index') }}"><i class="bx bx-right-arrow-alt"></i>Laporan Stock Opname</a>
                 </li>
-                <li> <a href="{{ route('laporanPenjualan.index', 0) }}"><i class="bx bx-right-arrow-alt"></i>Laporan Penjualan</a>
+                <li> <a href="{{ route('laporanPenjualan.index', 0) }}"><i class="bx bx-right-arrow-alt"></i>Laporan Penjualan Website</a>
+                </li>
+                <li> <a href="{{ route('laporanPenjualanToko.index', 0) }}"><i class="bx bx-right-arrow-alt"></i>Laporan Penjualan Toko</a>
                 </li>
             </ul>
         </li>

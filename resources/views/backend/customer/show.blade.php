@@ -73,7 +73,7 @@
                                 <tbody>
                                     @foreach ($dataPesanans as $dataPesanan)
                                     <tr>
-                                        <td>{{ Carbon\Carbon::parse($dataPesanan->tanggal_pesanan)->format('d F Y') }}</td>
+                                        <td>{{ Carbon\Carbon::parse($dataPesanan->created_at)->format('d F Y H:i:s') }}</td>
                                         <td>{{ $dataPesanan->alamat }}</td>
                                         <td class="text-end">@currency($dataPesanan->total_pesanan)</td>
                                     </tr>

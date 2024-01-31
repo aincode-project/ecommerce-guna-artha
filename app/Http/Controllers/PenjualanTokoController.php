@@ -16,7 +16,7 @@ class PenjualanTokoController extends Controller
      */
     public function index()
     {
-        $dataPenjualans = PenjualanToko::all();
+        $dataPenjualans = PenjualanToko::orderByDesc('created_at')->get();
 
         return view('backend.penjualan-toko.index', compact('dataPenjualans'));
     }

@@ -44,7 +44,7 @@
                 <tbody>
                     @foreach ($dataPenjualans as $dataPenjualan)
                     <tr>
-                        <td>{{ Carbon\Carbon::parse($dataPenjualan->created_at)->format('d F Y') }}</td>
+                        <td>{{ Carbon\Carbon::parse($dataPenjualan->created_at)->format('d F Y H:i:s') }}</td>
                         <td>{{ $dataPenjualan->pegawai->nama_pegawai }}</td>
                         <td class="text-end">@currency($dataPenjualan->total_penjualan)</td>
                         <td class="text-center">
@@ -62,7 +62,15 @@
 @section('backend-script')
 <script>
     $(document).ready(function() {
-        $('#penjualan-toko-table').DataTable();
+        $('#penjualan-toko-table').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": false,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
         } );
 </script>
 @endsection

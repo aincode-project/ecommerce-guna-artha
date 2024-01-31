@@ -125,7 +125,8 @@
         </div>
         <div class="row">
             <div class="col-md-8">
-                <div class="bg-primary" style="font-size: 3em; text-align: center; height: 100px; color: #f0f0f0">Bayar: @currency($dataDummys->sum('subtotal'))</div>
+                <div class="bg-primary" style="font-size: 2em; text-align: center; height: 50px; color: #f0f0f0">Bayar: @currency($dataDummys->sum('subtotal'))</div>
+                <div style="font-size: 2em; text-align: center; height: 50px;">Kembalian: <span id="kembalianjuga" style="color: #f0f0f0">-@currency($dataDummys->sum('subtotal'))</span></div>
                 {{-- <div style="padding: 10px; background: #f0f0f0;">  Rupiah</div> --}}
             </div>
             <div class="col-md-4">
@@ -228,8 +229,11 @@
 
             // Update the kembalian element and apply red color if it's negative
             var kembalianElement = document.getElementById('kembalian');
+            var kembalianjugaElement = document.getElementById('kembalianjuga');
             kembalianElement.innerText = sign + formattedKembalian;
             kembalianElement.style.color = kembalian < 0 ? 'red' : 'inherit';
+            kembalianjugaElement.innerText = sign + formattedKembalian;
+            kembalianjugaElement.style.color = kembalian < 0 ? 'red' : 'inherit';
         }
 
         function konfirmasiTransaksi() {

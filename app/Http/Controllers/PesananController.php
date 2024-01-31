@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DetailPenjualan;
-use App\Models\DetailPesanan;
-use App\Models\Penjualan;
 use App\Models\Pesanan;
+use App\Models\Penjualan;
+use App\Traits\WablasTrait;
 use Illuminate\Http\Request;
+use App\Models\DetailPesanan;
+use App\Models\PenjualanToko;
+use App\Models\DetailPenjualan;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class PesananController extends Controller
@@ -18,17 +21,27 @@ class PesananController extends Controller
      */
     public function index()
     {
+        $totalDipesan = Pesanan::where('status_pesanan', 'Dipesan')->count();
+        $totalCancel = Pesanan::where('status_pesanan', 'Cancel')->count();
+
         if (Auth::user()->hak_akses == "Kepala BUMDes") {
             $dataPesanans = Pesanan::orderByRaw("FIELD(status_pesanan, 'Dipesan', 'Diproses', 'Dikirim', 'Dikonfirmasi', 'Cancel')")->get();
+            $totalDiproses = Pesanan::where('status_pesanan', 'Diproses')->count();
+            $totalDikirim = Pesanan::where('status_pesanan', 'Dikirim')->count();
+            $totalDikonfirmasi = Pesanan::where('status_pesanan', 'Dikonfirmasi')->count();
         } else {
             $dataPesanans = Pesanan::where('pegawai_id', Auth::user()->pegawai->id)
                 ->orWhere('status_pesanan', 'Dipesan')
                 ->orWhere('status_pesanan', 'Cancel')
-                ->orderByRaw("FIELD(status_pesanan, 'Dipesan', 'Diproses', 'Dikirim', 'Cancel')")
+                ->orderByRaw("FIELD(status_pesanan, 'Dipesan', 'Diproses', 'Dikirim', 'Dikonfirmasi', 'Cancel')")
                 ->get();
+
+            $totalDiproses = Pesanan::where('pegawai_id', Auth::user()->pegawai->id)->where('status_pesanan', 'Diproses')->count();
+            $totalDikirim = Pesanan::where('pegawai_id', Auth::user()->pegawai->id)->where('status_pesanan', 'Dikirim')->count();
+            $totalDikonfirmasi = Pesanan::where('pegawai_id', Auth::user()->pegawai->id)->where('status_pesanan', 'Dikonfirmasi')->count();
         }
 
-        return view('backend.pesanan.index', compact('dataPesanans'));
+        return view('backend.pesanan.index', compact('dataPesanans', 'totalDipesan', 'totalDiproses', 'totalDikirim', 'totalCancel', 'totalDikonfirmasi'));
     }
 
     /**
@@ -109,10 +122,31 @@ class PesananController extends Controller
 
     public function kirimPesanan($id)
     {
+        $pesanan = Pesanan::where('id', $id)->first();
         Pesanan::where('id', $id)->update([
             'pegawai_id' => Auth::user()->pegawai->id,
             'status_pesanan' => "Dikirim",
         ]);
+
+
+
+        $kumpulan_data = [];
+
+        $data['phone'] = $pesanan->no_telp;
+        $data['message'] = "Pesanan atas nama " . $pesanan->nama_penerima . " pada tanggal " . Carbon::parse($pesanan->tanggal_penjualan)->format('d F Y') . " telah dikirim! <br>Mohon ditunggu.";
+        $data['secret'] = false;
+        $data['retry'] = false;
+        $data['isGroup'] = false;
+        array_push($kumpulan_data, $data);
+
+        $data['phone'] = $pesanan->customer->no_telp;
+        $data['message'] = "Pesanan atas nama " . $pesanan->nama_penerima . " pada tanggal " . Carbon::parse($pesanan->tanggal_penjualan)->format('d F Y') . " telah dikirim! <br>Mohon ditunggu.";
+        $data['secret'] = false;
+        $data['retry'] = false;
+        $data['isGroup'] = false;
+        array_push($kumpulan_data, $data);
+
+        WablasTrait::sendText($kumpulan_data);
 
         return redirect()->route('pesanan.show', $id);
     }

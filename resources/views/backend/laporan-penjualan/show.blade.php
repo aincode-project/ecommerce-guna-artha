@@ -9,8 +9,8 @@
             <ol class="breadcrumb mb-0 p-0">
                 <li class="breadcrumb-item"><a href="{{ route('home') }}"><i class="bx bx-home-alt"></i></a>
                 </li>
-                <li class="breadcrumb-item active" aria-current="page">Laporan Penjualan</li>
-                <li class="breadcrumb-item active" aria-current="page">Detail Laporan Penjualan</li>
+                <li class="breadcrumb-item active" aria-current="page">Laporan Penjualan Website</li>
+                <li class="breadcrumb-item active" aria-current="page">Detail Laporan Penjualan Website</li>
             </ol>
         </nav>
     </div>
@@ -50,7 +50,7 @@
                 <tbody>
                     @foreach ($dataPenjualans as $dataPenjualan)
                     <tr>
-                        <td>{{ $dataPenjualan->tanggal_penjualan }}</td>
+                        <td>{{ Carbon\Carbon::parse($dataPenjualan->created_at)->format('d F Y H:i:s') }}</td>
                         <td>{{ $dataPenjualan->customer->nama_customer }}</td>
                         <td>{{ $dataPenjualan->alamat }}</td>
                         <td class="text-end">@currency($dataPenjualan->total_penjualan)</td>
